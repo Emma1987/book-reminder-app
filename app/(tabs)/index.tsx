@@ -1,70 +1,65 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useContext, useMemo } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
+import { BookCardWatchList } from '@/components/BookCardWatchList';
+import { Collapsible } from '@/components/Collapsible';
+import { EmptyState } from '@/components/EmptyState';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { sortFavorites } from '@/helpers/BookHelper.js';
+import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+export default function WatchlistScreen() {
+    const { favorites, removeFavorite } = useContext(FavoriteBooksContext);
+
+    const { published, upcoming } = useMemo(() => sortFavorites(favorites), [favorites]);
+
+    const renderBookList = (books, emptyMessage) => {
+        if (books.length === 0) {
+            return (
+                <EmptyState
+                    title={emptyMessage}
+                    description="Add some books to your watchlist to see their release dates here."
+                    imageSource={require('@/assets/images/empty.png')}
+                    buttonText="Browse Books"
+                    onButtonPress={() => {
+                        router.replace('/add');
+                    }}
+                />
+            )
+        }
+
+        return books.map((book) => (
+            <BookCardWatchList key={book.id} book={book} onDelete={removeFavorite} />
+        ));
+    };
+
+    return (
+        <ParallaxScrollView
+            headerBackgroundColor='#FFDFF4'
+            headerImage={
+                <Image
+                    source={require('@/assets/images/bookshelf.png')}
+                    style={styles.headerImage}
+                />
+            }>
+            <View>
+                <ThemedText type="title">My Reading Watchlist</ThemedText>
+            </View>
+            <Text>Stay updated on the latest releases!</Text>
+
+            {/* Coming soon list */}
+            <Collapsible title={`Coming Soon (${upcoming.length})`} isCollapsibleOpen>
+                {renderBookList(upcoming, "No upcoming books here!")}
+            </Collapsible>
+
+            {/* Available now list */}
+            <Collapsible title={`Available Now (${published.length})`} isCollapsibleOpen={false}>
+                {renderBookList(published, "No books already published!")}
+            </Collapsible>
+        </ParallaxScrollView>
+    );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+const styles = StyleSheet.create({});
