@@ -22,10 +22,11 @@ export const sortFavorites = (favorites: BookType[]): { published: BookType[]; u
         }
     });
 
-    const sortByDate = (a: BookType, b: BookType) => new Date(a.publicationDate) - new Date(b.publicationDate);
+    const sortByDateAsc = (a: BookType, b: BookType) => new Date(a.publicationDate) - new Date(b.publicationDate);
+    const sortByDateDesc = (a: BookType, b: BookType) => new Date(b.publicationDate) - new Date(a.publicationDate);
 
     return {
-        published: published.sort(sortByDate),
-        upcoming: upcoming.sort(sortByDate),
+        published: published.sort(sortByDateDesc),
+        upcoming: upcoming.sort(sortByDateAsc),
     };
 }

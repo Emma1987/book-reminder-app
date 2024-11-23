@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
@@ -16,7 +16,10 @@ export default function AddBookScreen() {
 
     const { books, isLoading } = useBookSearch(search);
 
-    const openModal = (book) => setSelectedBook(book);
+    const openModal = (book) => {
+        setSelectedBook(book);
+        Keyboard.dismiss();
+    }
     const closeModal = () => setSelectedBook(null);
 
     const searchBook = (text) => setSearch(text);
@@ -72,6 +75,7 @@ export default function AddBookScreen() {
                         <View style={styles.empty}><ThemedText type="info">No results found</ThemedText></View>
                     }
                     refreshing={isLoading}
+                    keyboardShouldPersistTaps="handled"
                 />
             )}
 

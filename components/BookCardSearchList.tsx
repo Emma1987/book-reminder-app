@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
@@ -16,6 +16,8 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
 
     const toggleFavorite = () => {
+        Keyboard.dismiss();
+
         if (isFavorite(book.id)) {
             removeFavorite(book.id);
         } else {
@@ -29,6 +31,8 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
             <Image
                 source={book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')}
                 style={styles.bookCover}
+                accessibilityRole="image"
+                accessibilityLabel="Book cover"
             />
 
             {/* Book Description */}

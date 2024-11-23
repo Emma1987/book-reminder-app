@@ -15,21 +15,7 @@ export default function WatchlistScreen() {
 
     const { published, upcoming } = useMemo(() => sortFavorites(favorites), [favorites]);
 
-    const renderBookList = (books, emptyMessage) => {
-        if (books.length === 0) {
-            return (
-                <EmptyState
-                    title={emptyMessage}
-                    description="Add some books to your watchlist to see their release dates here."
-                    imageSource={require('@/assets/images/empty.png')}
-                    buttonText="Browse Books"
-                    onButtonPress={() => {
-                        router.replace('/add');
-                    }}
-                />
-            )
-        }
-
+    const renderBookList = (books) => {
         return books.map((book) => (
             <BookCardWatchList key={book.id} book={book} onDelete={removeFavorite} />
         ));
@@ -51,12 +37,32 @@ export default function WatchlistScreen() {
 
             {/* Coming soon list */}
             <Collapsible title={`Coming Soon (${upcoming.length})`} isCollapsibleOpen>
-                {renderBookList(upcoming, "No upcoming books here!")}
+                {(upcoming.length === 0) ? (
+                    <EmptyState
+                        title="No upcoming books here!"
+                        description="Add some books to your watchlist to see their release dates here."
+                        imageSource={require('@/assets/images/empty.png')}
+                        buttonText="Browse Books"
+                        onButtonPress={() => {
+                            router.replace('/add');
+                        }}
+                    />
+                ) : (
+                    renderBookList(upcoming)
+                )}
             </Collapsible>
 
             {/* Available now list */}
             <Collapsible title={`Available Now (${published.length})`} isCollapsibleOpen={false}>
-                {renderBookList(published, "No books already published!")}
+                {(published.length === 0) ? (
+                    <EmptyState
+                        title="No books already published!"
+                        description="None of the books in your watchlist are already published."
+                        imageSource={require('@/assets/images/empty.png')}
+                    />
+                ) : (
+                    renderBookList(published)
+                )}
             </Collapsible>
         </ParallaxScrollView>
     );

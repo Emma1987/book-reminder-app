@@ -17,7 +17,7 @@ export function BookDetailModal({ visible, onClose, book }) {
 
     const closeModal = () => {
         onClose();
-        bottomSheetRef.current.close();
+        bottomSheetRef.current?.close();
     }
 
     const toggleFavorite = () => {
@@ -44,18 +44,18 @@ export function BookDetailModal({ visible, onClose, book }) {
                 }
 
                 {/* Title, author and publication date */}
-                <ThemedText type="subtitle-center">{book.title}</ThemedText>
-                <ThemedText type="defaultSemiBold-center" style={styles.mb10}>Author: {book.authors?.join(', ')}</ThemedText>
-                <ThemedText type="info-center" style={styles.mb10}>Publication date: {book.publicationDateStr}</ThemedText>
+                <ThemedText type="subtitle" textAlign="center">{book.title}</ThemedText>
+                <ThemedText type="defaultSemiBold" textAlign="center" marginBottom="10">Author: {book.authors?.join(', ')}</ThemedText>
+                <ThemedText type="info" textAlign="center" marginBottom="10">Publication date: {book.publicationDateStr}</ThemedText>
 
                 {/* Language */}
                 {book.language && 
-                    <ThemedText type="info-center" style={styles.mb10}>Language: {book.language.toUpperCase()}</ThemedText>
+                    <ThemedText type="info" textAlign="center" marginBottom="10">Language: {book.language.toUpperCase()}</ThemedText>
                 }
 
                 {/* ISBN */}
-                {book.isbn10 && <ThemedText type="info-center">ISBN10: {book.isbn10}</ThemedText>}
-                {book.isbn13 && <ThemedText type="info-center">ISBN13: {book.isbn13}</ThemedText>}
+                {book.isbn10 && <ThemedText type="info" textAlign="center">ISBN10: {book.isbn10}</ThemedText>}
+                {book.isbn13 && <ThemedText type="info" textAlign="center">ISBN13: {book.isbn13}</ThemedText>}
 
                 {/* Description */}
                 {book.description &&
@@ -90,12 +90,6 @@ const styles = StyleSheet.create({
         height: 150,
         alignSelf: 'center',
         marginBottom: 16,
-    },
-    textCenter: {
-        textAlign: 'center'
-    },
-    mb10: {
-        marginBottom: 10,
     },
     description: {
         fontSize: 14,

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
@@ -14,12 +14,32 @@ type BookCardWatchListProps = {
 export function BookCardWatchList({ book }: BookCardWatchListProps) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
 
+    const handleRemoveFavorite = () => {
+        Alert.alert(
+            'Remove Favorite',
+            `Are you sure you want to remove "${book.title}" from your favorites?`,
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Remove',
+                    style: 'destructive',
+                    onPress: () => removeFavorite(book.id),
+                },
+            ]
+        );
+    };
+
     return (
         <View style={styles.container}>
             {/* Book Cover */}
             <Image
                 source={book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')}
                 style={styles.bookCover}
+                accessibilityRole="image"
+                accessibilityLabel="Book cover"
             />
 
             {/* Book Description */}
@@ -32,7 +52,7 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
             {/* Action Icons */}
             <View style={styles.actions}>
                 <TouchableOpacity
-                    onPress={() => removeFavorite(book.id)}
+                    onPress={handleRemoveFavorite}
                     accessibilityLabel="Remove from favorites" 
                     accessibilityHint="Removes this book from your favorites list"
                 >

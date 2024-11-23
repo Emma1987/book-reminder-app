@@ -3,10 +3,12 @@ import { Text, type TextProps, StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 export type ThemedTextProps = TextProps & {
-    type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'info' | 'default-center' | 'title-center' | 'defaultSemiBold-center' | 'subtitle-center' | 'link-center' | 'info-center';
+    type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'info';
+    textAlign?: 'default' | 'center';
+    marginBottom: '0' | '10' | '20';
 };
 
-export function ThemedText({style, type = 'default', ...rest}: ThemedTextProps) {
+export function ThemedText({style, type = 'default', textAlign = 'default', marginBottom = '0', ...rest}: ThemedTextProps) {
     return (
         <Text
             style={[
@@ -17,12 +19,10 @@ export function ThemedText({style, type = 'default', ...rest}: ThemedTextProps) 
                 type === 'link' ? styles.link : undefined,
                 type === 'info' ? styles.info : undefined,
 
-                type === 'default-center' ? [styles.center, styles.default] : undefined,
-                type === 'title-center' ? [styles.center, styles.title] : undefined,
-                type === 'defaultSemiBold-center' ? [styles.center, styles.defaultSemiBold] : undefined,
-                type === 'subtitle-center' ? [styles.center, styles.subtitle] : undefined,
-                type === 'link-center' ? [styles.center, styles.link] : undefined,
-                type === 'info-center' ? [styles.center, styles.info] : undefined,
+                textAlign === 'center' ? [styles.center] : undefined,
+
+                marginBottom === '10' ? [styles.marginBottom10] : undefined,
+                marginBottom === '20' ? [styles.marginBottom20] : undefined,
                 style,
             ]}
             {...rest}
@@ -60,5 +60,11 @@ const styles = StyleSheet.create({
     },
     center: {
         textAlign: 'center',
-    }
+    },
+    marginBottom10: {
+        marginBottom: 10
+    },
+    marginBottom20: {
+        marginBottom: 20
+    },
 });

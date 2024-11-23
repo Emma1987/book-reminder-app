@@ -14,12 +14,23 @@ type EmptyStateProps = {
 export function EmptyState({title, description, imageSource, buttonText, onButtonPress}: EmptyStateProps) {
     return (
         <View style={styles.container}>
-            <Image source={imageSource} style={styles.image} resizeMode="contain" />
+            <Image
+                source={imageSource}
+                style={styles.image}
+                resizeMode="contain"
+                accessibilityRole="image"
+                accessibilityLabel="Empty state image"
+            />
             <View style={styles.description}>
-                <ThemedText type="defaultSemiBold-center">{title}</ThemedText>
-                <ThemedText type="info-center">{description}</ThemedText>
+                <ThemedText type="defaultSemiBold" textAlign="center">{title}</ThemedText>
+                <ThemedText type="info" textAlign="center">{description}</ThemedText>
                 {buttonText && onButtonPress && (
-                    <TouchableOpacity style={styles.button} onPress={onButtonPress}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={onButtonPress}
+                        accessibilityRole="button"
+                        accessibilityLabel={buttonText}
+                    >
                         <ThemedText type="buttonText">{buttonText}</ThemedText>
                     </TouchableOpacity>
                 )}
@@ -40,7 +51,8 @@ const styles = StyleSheet.create({
         height: 100,
     },
     description: {
-        width: '70%'
+        width: '70%',
+        alignSelf: 'center',
     },
     button: {
         alignSelf: 'center',
