@@ -24,7 +24,8 @@ export default function WatchlistScreen() {
     return (
         <ParallaxScrollView
             headerBackgroundColor={Colors.pink}
-            headerImage={<Image source={require('@/assets/images/bookshelf.png')} />}>
+            headerImage={<Image source={require('@/assets/images/bookshelf.png')} />}
+        >
             <View>
                 <ThemedText type="title">My Reading Watchlist</ThemedText>
             </View>
