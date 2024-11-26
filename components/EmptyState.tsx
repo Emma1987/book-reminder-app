@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
 
 type EmptyStateProps = {
     title: string;
     description: string;
-    imageSource: any; // Path to an image or illustration
+    imageSource: any;
     buttonText?: string;
     onButtonPress?: () => void;
 };
 
-export function EmptyState({title, description, imageSource, buttonText, onButtonPress}: EmptyStateProps) {
+export function EmptyState({ title, description, imageSource, buttonText, onButtonPress }: EmptyStateProps) {
     return (
         <View style={styles.container}>
             <Image
@@ -22,8 +22,12 @@ export function EmptyState({title, description, imageSource, buttonText, onButto
                 accessibilityLabel="Empty state image"
             />
             <View style={styles.description}>
-                <ThemedText type="defaultSemiBold" textAlign="center">{title}</ThemedText>
-                <ThemedText type="info" textAlign="center">{description}</ThemedText>
+                <ThemedText type="defaultSemiBold" textAlign="center">
+                    {title}
+                </ThemedText>
+                <ThemedText type="info" textAlign="center">
+                    {description}
+                </ThemedText>
                 {buttonText && onButtonPress && (
                     <TouchableOpacity
                         style={styles.button}
@@ -31,14 +35,13 @@ export function EmptyState({title, description, imageSource, buttonText, onButto
                         accessibilityRole="button"
                         accessibilityLabel={buttonText}
                     >
-                        <ThemedText type="buttonText">{buttonText}</ThemedText>
+                        <Text>{buttonText}</Text>
                     </TouchableOpacity>
                 )}
             </View>
-            
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {

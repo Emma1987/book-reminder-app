@@ -3,7 +3,7 @@ import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
-import BookType from '@/components/types';
+import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
@@ -12,7 +12,7 @@ type BookCardSearchListProps = {
     onSeeDetails: (book: BookType) => void;
 };
 
-export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
+export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListProps) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
 
     const toggleFavorite = () => {
@@ -24,12 +24,14 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
             addFavorite(book);
         }
     };
-    
+
     return (
         <View style={styles.container}>
             {/* Book Cover */}
             <Image
-                source={book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')}
+                source={
+                    book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')
+                }
                 style={styles.bookCover}
                 accessibilityRole="image"
                 accessibilityLabel="Book cover"
@@ -46,7 +48,7 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
             <View style={styles.actions}>
                 <TouchableOpacity
                     onPress={toggleFavorite}
-                    accessibilityLabel="Add to favorites" 
+                    accessibilityLabel="Add to favorites"
                     accessibilityHint="Adds this book to your favorites list"
                 >
                     {isFavorite(book.id) && <Ionicons name="heart" size={25} color={Colors.red} />}
@@ -54,7 +56,7 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchList) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => onSeeDetails(book)}
-                    accessibilityLabel="View book details" 
+                    accessibilityLabel="View book details"
                     accessibilityHint={`View more details about ${book.title}`}
                 >
                     <Ionicons name="information-circle-outline" size={25} color={Colors.gray} />

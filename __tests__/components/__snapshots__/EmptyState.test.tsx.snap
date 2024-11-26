@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyState matches the snapshot 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "marginVertical": 20,
+      "minHeight": 1,
+    }
+  }
+>
+  <Image
+    accessibilityLabel="Empty state image"
+    accessibilityRole="image"
+    resizeMode="contain"
+    source={
+      {
+        "uri": "https://example.com/test.png",
+      }
+    }
+    style={
+      {
+        "height": 100,
+        "width": "30%",
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "alignSelf": "center",
+        "width": "70%",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          {
+            "fontSize": 16,
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          [
+            {
+              "textAlign": "center",
+            },
+          ],
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      No Data
+    </Text>
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "color": "gray",
+            "fontSize": 14,
+          },
+          [
+            {
+              "textAlign": "center",
+            },
+          ],
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Add items to see them here.
+    </Text>
+    <View
+      accessibilityLabel="Add Item"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignSelf": "center",
+          "backgroundColor": "#ffdff4",
+          "borderRadius": 5,
+          "marginTop": 10,
+          "opacity": 1,
+          "paddingHorizontal": 20,
+          "paddingVertical": 10,
+        }
+      }
+    >
+      <Text>
+        Add Item
+      </Text>
+    </View>
+  </View>
+</View>
+`;

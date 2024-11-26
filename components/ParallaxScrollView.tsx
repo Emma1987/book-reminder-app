@@ -1,7 +1,6 @@
 import type { PropsWithChildren, ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const HEADER_HEIGHT = 250;
 
@@ -21,7 +20,7 @@ export default function ParallaxScrollView({ children, headerImage, headerBackgr
                     translateY: interpolate(
                         scrollOffset.value,
                         [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.5]
+                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.5],
                     ),
                 },
                 {
