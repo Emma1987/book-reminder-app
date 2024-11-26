@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookCardWatchList matches the snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "whitesmoke",
+      "borderRadius": 5,
+      "flexDirection": "row",
+      "marginBottom": 5,
+      "padding": 10,
+    }
+  }
+>
+  <Image
+    accessibilityLabel="Book cover"
+    accessibilityRole="image"
+    source={
+      {
+        "uri": "https://book.com/hidden-pictures-cover.jpg",
+      }
+    }
+    style={
+      {
+        "height": 60,
+        "width": 40,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingLeft": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          {
+            "fontSize": 16,
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Hidden Pictures
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Jason Rekulak
+    </Text>
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "color": "gray",
+            "fontSize": 14,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Publication: 
+      2024-10-17
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "width": 30,
+      }
+    }
+  >
+    <View
+      accessibilityHint="Removes this book from your favorites list"
+      accessibilityLabel="Remove from favorites"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text>
+        trash-outline
+      </Text>
+    </View>
+  </View>
+</View>
+`;

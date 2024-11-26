@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookDetailModal matches the snapshot 1`] = `
+<View
+  enableDynamicSizing={false}
+  enablePanDownToClose={true}
+  index={0}
+  onClose={[Function]}
+  snapPoints={
+    [
+      "50%",
+      "90%",
+    ]
+  }
+>
+  <RCTScrollView
+    style={
+      {
+        "padding": 20,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 20,
+              "fontWeight": "bold",
+            },
+            undefined,
+            undefined,
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        It
+      </Text>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            {
+              "fontSize": 16,
+              "fontWeight": "600",
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            [
+              {
+                "marginBottom": 10,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Author: 
+        Stephen King
+      </Text>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "gray",
+              "fontSize": 14,
+            },
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            [
+              {
+                "marginBottom": 10,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Publication date: 
+        1987-10-01
+      </Text>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "gray",
+              "fontSize": 14,
+            },
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            [
+              {
+                "marginBottom": 10,
+              },
+            ],
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        Language: 
+        EN
+      </Text>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "gray",
+              "fontSize": 14,
+            },
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        ISBN10: 
+        0450411435
+      </Text>
+      <Text
+        style={
+          [
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "gray",
+              "fontSize": 14,
+            },
+            [
+              {
+                "textAlign": "center",
+              },
+            ],
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        ISBN13: 
+        9780450411434
+      </Text>
+      <View>
+        <View
+          style={
+            {
+              "backgroundColor": "#ccc",
+              "height": 1,
+              "marginVertical": 20,
+              "width": "100%",
+            }
+          }
+        />
+        <Text
+          style={
+            {
+              "fontSize": 14,
+              "marginBottom": 50,
+              "textAlign": "justify",
+            }
+          }
+        >
+          Welcome to Derry, Maine...
+        </Text>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignSelf": "center",
+            "backgroundColor": "#ff645c",
+            "borderRadius": 5,
+            "marginBottom": 50,
+            "opacity": 1,
+            "paddingHorizontal": 20,
+            "paddingVertical": 10,
+            "width": 150,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "color": "white",
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          Add to favorites
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

@@ -1,10 +1,10 @@
 import { apiClient } from '@/api/apiClient';
-import BookType from '@/components/types';
+import { BookType } from '@/components/types';
 import { formatDateStr, getDateObject } from '@/helpers/DateHelper';
 
 const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
-const getBookEntity = (book: any): BookType => {
+const getBookEntity = (book: any): BookType | undefined => {
     const { volumeInfo } = book;
     if (!volumeInfo) {
         return;
@@ -20,8 +20,8 @@ const getBookEntity = (book: any): BookType => {
         description,
     } = volumeInfo;
 
-    const isbn10 = industryIdentifiers.find(item => item.type === 'ISBN_10')?.identifier ?? null;
-    const isbn13 = industryIdentifiers.find(item => item.type === 'ISBN_13')?.identifier ?? null;
+    const isbn10 = industryIdentifiers.find((item: any) => item.type === 'ISBN_10')?.identifier ?? null;
+    const isbn13 = industryIdentifiers.find((item: any) => item.type === 'ISBN_13')?.identifier ?? null;
     const coverImage = imageLinks.thumbnail?.replace('http://', 'https://') ?? null;
     const publicationDate = publishedDate ? getDateObject(publishedDate) : null;
     const publicationDateStr = publishedDate ? formatDateStr(publishedDate) : null;
@@ -42,6 +42,10 @@ const getBookEntity = (book: any): BookType => {
 
 export const getBooks = async (search: string): Promise<BookType[]> => {
     try {
+        if (!apiKey) {
+            throw new Error('API key is missing');
+        }
+
         const requestParams = new URLSearchParams({
             q: `"${search.replace(/ /g, '+')}"`,
             langRestrict: 'en',

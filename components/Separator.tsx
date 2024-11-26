@@ -4,9 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 export function Separator() {
-    return (
-        <View style={styles.separator} />
-    );
+    return <View style={styles.separator} />;
 }
 
 const styles = StyleSheet.create({

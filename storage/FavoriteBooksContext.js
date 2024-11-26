@@ -22,12 +22,12 @@ export const FavoriteBooksProvider = ({ children }) => {
     };
 
     const removeFavorite = async (bookId) => {
-        const updatedFavorites = favorites.filter(book => book.id !== bookId);
+        const updatedFavorites = favorites.filter((book) => book.id !== bookId);
         setFavorites(updatedFavorites);
         await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     };
 
-    const isFavorite = (bookId) => favorites.some(book => book.id === bookId);
+    const isFavorite = (bookId) => favorites.some((book) => book.id === bookId);
 
     return (
         <FavoriteBooksContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>

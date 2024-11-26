@@ -5,10 +5,16 @@ import { Colors } from '@/constants/Colors';
 export type ThemedTextProps = TextProps & {
     type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'info';
     textAlign?: 'default' | 'center';
-    marginBottom: '0' | '10' | '20';
+    marginBottom?: '0' | '10' | '20';
 };
 
-export function ThemedText({style, type = 'default', textAlign = 'default', marginBottom = '0', ...rest}: ThemedTextProps) {
+export function ThemedText({
+    style,
+    type = 'default',
+    textAlign = 'default',
+    marginBottom = '0',
+    ...rest
+}: ThemedTextProps) {
     return (
         <Text
             style={[
@@ -62,9 +68,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     marginBottom10: {
-        marginBottom: 10
+        marginBottom: 10,
     },
     marginBottom20: {
-        marginBottom: 20
+        marginBottom: 20,
     },
 });
