@@ -75,9 +75,13 @@ export default function AddBookScreen() {
                     keyExtractor={(item: BookType) => item.id}
                     renderItem={({ item }) => <BookCardSearchList book={item} onSeeDetails={() => openModal(item)} />}
                     ListEmptyComponent={
-                        !(isLoading || search === '')
-                            ? (<View style={styles.empty}><ThemedText type="info">No results found</ThemedText></View>)
-                            : (<View></View>)
+                        !(isLoading || search === '') ? (
+                            <View style={styles.empty}>
+                                <ThemedText type="info">No results found</ThemedText>
+                            </View>
+                        ) : (
+                            <View></View>
+                        )
                     }
                     refreshing={isLoading}
                     keyboardShouldPersistTaps="handled"
@@ -85,13 +89,7 @@ export default function AddBookScreen() {
             )}
 
             {/* Details modal */}
-            {selectedBook && (
-                <BookDetailModal
-                    visible={!!selectedBook}
-                    onClose={closeModal}
-                    book={selectedBook}
-                />
-            )}
+            {selectedBook && <BookDetailModal visible={!!selectedBook} onClose={closeModal} book={selectedBook} />}
         </GestureHandlerRootView>
     );
 }
