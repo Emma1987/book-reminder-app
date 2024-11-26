@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getBooks } from '@/api/bookApi';
+import { BookType } from '@/components/types';
 import debounce from 'lodash.debounce';
 
-export const useBookSearch = (query) => {
-    const [books, setBooks] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+export const useBookSearch = (query: string) => {
+    const [books, setBooks] = useState<BookType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!query) {
@@ -26,7 +27,7 @@ export const useBookSearch = (query) => {
 
                 setBooks(filteredBooks);
             } catch (error) {
-                console.error("Error fetching books:", error);
+                console.error('Error fetching books:', error);
                 setBooks([]);
             } finally {
                 setIsLoading(false);

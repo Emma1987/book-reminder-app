@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookCardSearchList matches the snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "borderBottomWidth": 1,
+      "borderColor": "white",
+      "flexDirection": "row",
+      "padding": 10,
+    }
+  }
+>
+  <Image
+    accessibilityLabel="Book cover"
+    accessibilityRole="image"
+    source={
+      {
+        "uri": "https://book.com/little-secrets-cover.jpg",
+      }
+    }
+    style={
+      {
+        "height": 90,
+        "width": 60,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "flex": 1,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          undefined,
+          {
+            "fontSize": 20,
+            "fontWeight": "bold",
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Little Secrets
+    </Text>
+    <Text
+      style={
+        [
+          undefined,
+          undefined,
+          {
+            "fontSize": 16,
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Jennifer Hillier
+    </Text>
+    <Text>
+      Publication: 
+      2020-05-07
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "width": 60,
+      }
+    }
+  >
+    <View
+      accessibilityHint="Adds this book to your favorites list"
+      accessibilityLabel="Add to favorites"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text>
+        heart-outline
+      </Text>
+    </View>
+    <View
+      accessibilityHint="View more details about Little Secrets"
+      accessibilityLabel="View book details"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "opacity": 1,
+        }
+      }
+    >
+      <Text>
+        information-circle-outline
+      </Text>
+    </View>
+  </View>
+</View>
+`;

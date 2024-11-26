@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
-import BookType from '@/components/types';
+import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
@@ -12,31 +12,30 @@ type BookCardWatchListProps = {
 };
 
 export function BookCardWatchList({ book }: BookCardWatchListProps) {
-    const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
+    const { removeFavorite } = useContext(FavoriteBooksContext);
 
     const handleRemoveFavorite = () => {
-        Alert.alert(
-            'Remove Favorite',
-            `Are you sure you want to remove "${book.title}" from your favorites?`,
-            [
-                {
-                    text: 'Cancel',
-                    style: 'cancel',
-                },
-                {
-                    text: 'Remove',
-                    style: 'destructive',
-                    onPress: () => removeFavorite(book.id),
-                },
-            ]
-        );
+        Alert.alert('Remove Favorite', `Are you sure you want to remove "${book.title}" from your favorites?`, [
+            {
+                text: 'Cancel',
+                style: 'cancel',
+                onPress: () => {},
+            },
+            {
+                text: 'Remove',
+                style: 'destructive',
+                onPress: () => removeFavorite(book.id),
+            },
+        ]);
     };
 
     return (
         <View style={styles.container}>
             {/* Book Cover */}
             <Image
-                source={book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')}
+                source={
+                    book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')
+                }
                 style={styles.bookCover}
                 accessibilityRole="image"
                 accessibilityLabel="Book cover"
@@ -53,7 +52,7 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
             <View style={styles.actions}>
                 <TouchableOpacity
                     onPress={handleRemoveFavorite}
-                    accessibilityLabel="Remove from favorites" 
+                    accessibilityLabel="Remove from favorites"
                     accessibilityHint="Removes this book from your favorites list"
                 >
                     <Ionicons name="trash-outline" size={20} color={Colors.red} />

@@ -1,6 +1,6 @@
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Animated, Easing, StyleSheet, TouchableOpacity, View, useAnimatedValue } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
@@ -22,7 +22,7 @@ export function Collapsible({ children, title, isCollapsibleOpen = false }: Coll
             easing: Easing.linear,
             useNativeDriver: false,
         }).start();
-    }, [isOpen, contentHeight]);
+    }, [animatedHeight, isOpen, contentHeight]);
 
     useEffect(() => {
         setIsOpen(isCollapsibleOpen);
@@ -40,14 +40,11 @@ export function Collapsible({ children, title, isCollapsibleOpen = false }: Coll
                 accessibilityState={{ expanded: isOpen }}
                 accessibilityLabel={`${title} section`}
             >
-                <Ionicons
-                    name={isOpen ? 'chevron-down' : 'chevron-forward-outline'}
-                    size={18}
-                    color={Colors.icon}
-                />
+                <Ionicons name={isOpen ? 'chevron-down' : 'chevron-forward-outline'} size={18} color={Colors.icon} />
                 <ThemedText type="defaultSemiBold">{title}</ThemedText>
             </TouchableOpacity>
             <Animated.View
+                testID="animated-view"
                 style={[
                     styles.content,
                     {
@@ -83,6 +80,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     animatedView: {
-        minHeight: 1
+        minHeight: 1,
     },
 });
