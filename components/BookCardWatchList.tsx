@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ThemedText';
 import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
+import { formatDateStr } from '@/helpers/DateHelper';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
 type BookCardWatchListProps = {
@@ -45,7 +46,7 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
             <View style={styles.bookDescription}>
                 <ThemedText type="defaultSemiBold">{book.title}</ThemedText>
                 <ThemedText type="default">{book.authors?.[0] ?? ''}</ThemedText>
-                <ThemedText type="info">Publication: {book.publicationDateStr}</ThemedText>
+                <ThemedText type="info">Release date: {formatDateStr(book.releaseDateRaw)}</ThemedText>
             </View>
 
             {/* Action Icons */}

@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ThemedText';
 import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
+import { formatDateStr } from '@/helpers/DateHelper';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
 type BookCardSearchListProps = {
@@ -41,7 +42,7 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListPro
             <View style={styles.bookDescription}>
                 <ThemedText type="subtitle">{book.title}</ThemedText>
                 <ThemedText type="defaultSemiBold">{book.authors?.[0] ?? ''}</ThemedText>
-                <Text>Publication: {book.publicationDateStr}</Text>
+                <Text>Release date: {formatDateStr(book.releaseDateRaw)}</Text>
             </View>
 
             {/* Action Icons */}

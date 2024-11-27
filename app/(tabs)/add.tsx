@@ -111,13 +111,11 @@ const styles = StyleSheet.create({
         borderColor: Colors.gray,
         borderRadius: 10,
         padding: 10,
-        marginHorizontal: 0,
     },
     icon: {
         position: 'absolute',
         right: 20,
-        bottom: 10,
-        transform: [{ translateY: -10 }],
+        bottom: 20,
     },
     spinnerContainer: {
         flex: 1,

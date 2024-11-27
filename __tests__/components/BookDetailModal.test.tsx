@@ -15,7 +15,7 @@ describe('BookDetailModal', () => {
 
         expect(getByText('It')).toBeTruthy();
         expect(getByText('Author: Stephen King')).toBeTruthy();
-        expect(getByText('Publication date: 1987-10-01')).toBeTruthy();
+        expect(getByText('Release date: 1 Oct 1987')).toBeTruthy();
         expect(getByText('ISBN10: 0450411435')).toBeTruthy();
         expect(getByText('ISBN13: 9780450411434')).toBeTruthy();
         expect(getByText('Welcome to Derry, Maine...')).toBeTruthy();

@@ -1,18 +1,19 @@
 import { isBefore, startOfDay } from 'date-fns';
 import { BookType } from '@/components/types';
 
-export const isPublished = (publicationDate: Date | null): boolean => {
-    if (!publicationDate) {
+export const isPublished = (book: BookType): boolean => {
+    if (!book.releaseDateRaw) {
         return false;
     }
 
     const currentDate = startOfDay(new Date());
-    return isBefore(publicationDate, currentDate);
+    const releaseDate = new Date(book.releaseDateRaw);
+    return isBefore(releaseDate, currentDate);
 };
 
 const sortByDateAsc = (a: BookType, b: BookType): number => {
-    const dateA = a.publicationDate ? new Date(a.publicationDate).getTime() : NaN;
-    const dateB = b.publicationDate ? new Date(b.publicationDate).getTime() : NaN;
+    const dateA = a.releaseDateRaw ? new Date(a.releaseDateRaw).getTime() : NaN;
+    const dateB = b.releaseDateRaw ? new Date(b.releaseDateRaw).getTime() : NaN;
 
     if (isNaN(dateA)) return 1;
     if (isNaN(dateB)) return -1;
@@ -21,8 +22,8 @@ const sortByDateAsc = (a: BookType, b: BookType): number => {
 };
 
 const sortByDateDesc = (a: BookType, b: BookType): number => {
-    const dateA = a.publicationDate ? new Date(a.publicationDate).getTime() : NaN;
-    const dateB = b.publicationDate ? new Date(b.publicationDate).getTime() : NaN;
+    const dateA = a.releaseDateRaw ? new Date(a.releaseDateRaw).getTime() : NaN;
+    const dateB = b.releaseDateRaw ? new Date(b.releaseDateRaw).getTime() : NaN;
 
     if (isNaN(dateA)) return 1;
     if (isNaN(dateB)) return -1;
@@ -35,7 +36,7 @@ export const sortFavorites = (favorites: BookType[]): { published: BookType[]; u
     const upcoming: BookType[] = [];
 
     favorites.forEach((book) => {
-        if (isPublished(book.publicationDate)) {
+        if (isPublished(book)) {
             published.push(book);
         } else {
             upcoming.push(book);
