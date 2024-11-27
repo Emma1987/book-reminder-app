@@ -3,29 +3,19 @@ import { addDays, subDays, format } from 'date-fns';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
 // Dates
-export const today = new Date();
-export const thirtyDaysAgo = subDays(today, 30);
-export const fifteenDaysAgo = subDays(today, 15);
-export const yesterday = subDays(today, 1);
-export const tomorrow = addDays(today, 1);
-export const fifteenDaysFromNow = addDays(today, 15);
-
-export const formattedDates = {
-    thirtyDaysAgo: format(thirtyDaysAgo, 'yyyy-MM-dd'),
-    fifteenDaysAgo: format(fifteenDaysAgo, 'yyyy-MM-dd'),
-    yesterday: format(yesterday, 'yyyy-MM-dd'),
-    today: format(today, 'yyyy-MM-dd'),
-    tomorrow: format(tomorrow, 'yyyy-MM-dd'),
-    fifteenDaysFromNow: format(fifteenDaysFromNow, 'yyyy-MM-dd'),
-};
+export const today = format(new Date(), 'yyyy-MM-dd');
+export const thirtyDaysAgo = format(subDays(today, 30), 'yyyy-MM-dd');
+export const fifteenDaysAgo = format(subDays(today, 15), 'yyyy-MM-dd');
+export const yesterday = format(subDays(today, 1), 'yyyy-MM-dd');
+export const tomorrow = format(addDays(today, 1), 'yyyy-MM-dd');
+export const fifteenDaysFromNow = format(addDays(today, 15), 'yyyy-MM-dd');
 
 // Books
 export const littleSecretsBook = {
     id: '1',
     title: 'Little Secrets',
     authors: ['Jennifer Hillier'],
-    publicationDateStr: '2020-05-07',
-    publicationDate: new Date('2020-05-07'),
+    releaseDateRaw: '2020-05-07',
     coverImage: 'https://book.com/little-secrets-cover.jpg',
     description: 'Marin had the perfect life...',
 };
@@ -34,8 +24,7 @@ export const hiddenPicturesBook = {
     id: '2',
     title: 'Hidden Pictures',
     authors: ['Jason Rekulak'],
-    publicationDateStr: '2024-10-17',
-    publicationDate: new Date('2024-10-17'),
+    releaseDateRaw: '2024-10-17',
     coverImage: 'https://book.com/hidden-pictures-cover.jpg',
 };
 
@@ -43,8 +32,7 @@ export const itBook = {
     id: '3',
     title: 'It',
     authors: ['Stephen King'],
-    publicationDateStr: '1987-10-01',
-    publicationDate: new Date('1987-10-01'),
+    releaseDateRaw: '1987-10-01',
     coverImage: null,
     description: 'Welcome to Derry, Maine...',
     language: 'en',
@@ -56,8 +44,7 @@ export const veryAnticipatedBook = {
     id: '4',
     title: 'Very anticipated book!',
     authors: ['Famous Author'],
-    publicationDateStr: format(fifteenDaysFromNow, 'yyyy-MM-dd'),
-    publicationDate: fifteenDaysFromNow,
+    releaseDateRaw: format(fifteenDaysFromNow, 'yyyy-MM-dd'),
     coverImage: null,
 };
 
@@ -89,4 +76,3 @@ export const FavoriteBooksContextWrapper = ({
         </FavoriteBooksContext.Provider>
     );
 };
-

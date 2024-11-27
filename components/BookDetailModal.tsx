@@ -6,6 +6,7 @@ import { Separator } from '@/components/Separator';
 import { ThemedText } from '@/components/ThemedText';
 import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
+import { formatDateStr } from '@/helpers/DateHelper';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
 type BookDetailModalProps = {
@@ -53,7 +54,7 @@ export function BookDetailModal({ visible, onClose, book }: BookDetailModalProps
                     Author: {book.authors?.join(', ')}
                 </ThemedText>
                 <ThemedText type="info" textAlign="center" marginBottom="10">
-                    Publication date: {book.publicationDateStr}
+                    Release date: {formatDateStr(book.releaseDateRaw)}
                 </ThemedText>
 
                 {/* Language */}

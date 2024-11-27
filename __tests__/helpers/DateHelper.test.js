@@ -2,7 +2,7 @@ import { formatDateStr, getDateObject } from '@/helpers/DateHelper';
 
 describe('DateHelper functions', () => {
     describe('test function formatDateStr', () => {
-        it('formats a full date string correctly', () => {
+        it('formats a full date with dayFirst param correctly', () => {
             expect(formatDateStr('2024-11-20')).toBe('20 Nov 2024');
             expect(formatDateStr('2024-11')).toBe('Nov 2024');
             expect(formatDateStr('2024')).toBe('2024');
@@ -11,6 +11,17 @@ describe('DateHelper functions', () => {
             expect(formatDateStr(12)).toBeNull();
             expect(formatDateStr('invalid-date')).toBeNull();
             expect(getDateObject(null)).toBeNull();
+        });
+
+        it('formats a full date with monthFirst param correctly', () => {
+            expect(formatDateStr('2024-11-20', 'monthFirst')).toBe('Nov 20, 2024');
+            expect(formatDateStr('2024-11', 'monthFirst')).toBe('Nov 2024');
+            expect(formatDateStr('2024', 'monthFirst')).toBe('2024');
+
+            expect(formatDateStr('22', 'monthFirst')).toBeNull();
+            expect(formatDateStr(12, 'monthFirst')).toBeNull();
+            expect(formatDateStr('invalid-date', 'monthFirst')).toBeNull();
+            expect(getDateObject(null, 'monthFirst')).toBeNull();
         });
     });
 

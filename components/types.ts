@@ -3,8 +3,7 @@ export type BookType = {
     title: string;
     authors: string[];
     description: string;
-    publicationDateStr: string | null;
-    publicationDate: Date | null;
+    releaseDateRaw: string | null;
     isbn10: string | null;
     isbn13: string | null;
     coverImage: string | null;

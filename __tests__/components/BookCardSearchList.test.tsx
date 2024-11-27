@@ -14,7 +14,7 @@ describe('BookCardSearchList', () => {
 
         expect(getByText('Little Secrets')).toBeTruthy();
         expect(getByText('Jennifer Hillier')).toBeTruthy();
-        expect(getByText('Publication: 2020-05-07')).toBeTruthy();
+        expect(getByText('Release date: 7 May 2020')).toBeTruthy();
     });
 
     it('renders only first author when several authors', () => {
@@ -31,7 +31,7 @@ describe('BookCardSearchList', () => {
 
         expect(getByText('Little Secrets')).toBeTruthy();
         expect(getByText('Stephen King')).toBeTruthy();
-        expect(getByText('Publication: 2020-05-07')).toBeTruthy();
+        expect(getByText('Release date: 7 May 2020')).toBeTruthy();
     });
 
     it('renders placeholder image when coverImage is null', () => {

@@ -104,8 +104,8 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        Publication date: 
-        1987-10-01
+        Release date: 
+        1 Oct 1987
       </Text>
       <Text
         style={

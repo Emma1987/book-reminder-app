@@ -1,27 +1,44 @@
 import { parse } from 'date-fns';
 
-export const formatDateStr = (dateString: string): string | null => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export const formatDateStr = (
+    dateString: string | null,
+    formatType: 'dayFirst' | 'monthFirst' = 'dayFirst',
+): string | null => {
+    if (!dateString) return null;
+
     const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
     const monthYearPattern = /^\d{4}-\d{2}$/;
     const yearPattern = /^\d{4}$/;
 
-    if (fullDatePattern.test(dateString)) {
-        const [year, month, day] = dateString.split('-');
-        const monthName = months[parseInt(month, 10) - 1];
+    try {
+        if (fullDatePattern.test(dateString)) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.toLocaleString('en-US', { month: 'short' });
+            const year = date.getFullYear();
 
-        return `${day} ${monthName} ${year}`;
-    }
+            if (formatType === 'dayFirst') {
+                return `${day} ${month} ${year}`;
+            } else {
+                return `${month} ${day}, ${year}`;
+            }
+        }
 
-    if (monthYearPattern.test(dateString)) {
-        const [year, month] = dateString.split('-');
-        const monthName = months[parseInt(month, 10) - 1];
+        if (monthYearPattern.test(dateString)) {
+            const [year, month] = dateString.split('-');
+            const date = new Date(Number(year), Number(month) - 1);
 
-        return `${monthName} ${year}`;
-    }
+            return new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                year: 'numeric',
+            }).format(date);
+        }
 
-    if (yearPattern.test(dateString)) {
-        return dateString;
+        if (yearPattern.test(dateString)) {
+            return dateString;
+        }
+    } catch (error) {
+        console.error('Error formatting date:', error);
     }
 
     return null;

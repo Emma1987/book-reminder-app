@@ -21,7 +21,7 @@ describe('BookCardWatchList', () => {
 
         expect(getByText('Hidden Pictures')).toBeTruthy();
         expect(getByText('Jason Rekulak')).toBeTruthy();
-        expect(getByText('Publication: 2024-10-17')).toBeTruthy();
+        expect(getByText('Release date: 17 Oct 2024')).toBeTruthy();
     });
 
     it('renders only first author when several authors', () => {
@@ -38,7 +38,7 @@ describe('BookCardWatchList', () => {
 
         expect(getByText('Hidden Pictures')).toBeTruthy();
         expect(getByText('Stephen King')).toBeTruthy();
-        expect(getByText('Publication: 2024-10-17')).toBeTruthy();
+        expect(getByText('Release date: 17 Oct 2024')).toBeTruthy();
     });
 
     it('renders placeholder image when coverImage is null', () => {

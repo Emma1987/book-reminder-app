@@ -1,48 +1,52 @@
 import { startOfDay } from 'date-fns';
 import { BookType } from '@/components/types';
 import { isPublished, sortFavorites } from '@/helpers/BookHelper';
-import { thirtyDaysAgo, fifteenDaysAgo, yesterday, today, tomorrow, fifteenDaysFromNow } from '@/__tests__/__fixtures__/fixtures';
+import { today, thirtyDaysAgo, fifteenDaysAgo, yesterday, tomorrow, fifteenDaysFromNow } from '@/__tests__/__fixtures__/fixtures';
 
 describe('BookHelper functions', () => {
     describe('test function isPublished', () => {
-        it('should return true if publicationDate is in the past', () => {
-            expect(isPublished(yesterday)).toBe(true);
+        it('should return true if release date is in the past', () => {
+            const book: BookType = { title: 'Dracula', releaseDateRaw: yesterday };
+            expect(isPublished(book)).toBe(true);
         });
 
-        it('should return false if publicationDate is today', () => {
-            expect(isPublished(today)).toBe(false);
+        it('should return false if release date is today', () => {
+            const book: BookType = { title: 'The Haunting of Hill House', releaseDateRaw: today };
+            expect(isPublished(book)).toBe(false);
         });
 
-        it('should return false if publicationDate is in the future', () => {
-            expect(isPublished(tomorrow)).toBe(false);
+        it('should return false if release date is in the future', () => {
+            const book: BookType = { title: 'Frankenstein', releaseDateRaw: tomorrow };
+            expect(isPublished(book)).toBe(false);
         });
 
-        it('should return false if publicationDate is null', () => {
-            expect(isPublished(null)).toBe(false);
+        it('should return false if release date is null', () => {
+            const book: BookType = { title: 'The Exorcist', releaseDateRaw: null };
+            expect(isPublished(book)).toBe(false);
         });
     });
 
     describe('test function sortFavorites', () => {
         const books: BookType[] = [
-            { title: 'Dracula', publicationDate: yesterday },
-            { title: 'The Haunting of Hill House', publicationDate: tomorrow },
-            { title: 'Frankenstein', publicationDate: thirtyDaysAgo },
-            { title: 'The Exorcist', publicationDate: fifteenDaysAgo },
-            { title: 'Interview with the Vampire', publicationDate: fifteenDaysFromNow },
+            { title: 'Dracula', releaseDateRaw: yesterday },
+            { title: 'The Haunting of Hill House', releaseDateRaw: tomorrow },
+            { title: 'Frankenstein', releaseDateRaw: thirtyDaysAgo },
+            { title: 'The Exorcist', releaseDateRaw: fifteenDaysAgo },
+            { title: 'Interview with the Vampire', releaseDateRaw: fifteenDaysFromNow },
         ];
 
         it('should sort books into published and upcoming categories', () => {
             const { published, upcoming } = sortFavorites(books);
 
             expect(published).toEqual([
-                { title: 'Dracula', publicationDate: yesterday },
-                { title: 'The Exorcist', publicationDate: fifteenDaysAgo },
-                { title: 'Frankenstein', publicationDate: thirtyDaysAgo },
+                { title: 'Dracula', releaseDateRaw: yesterday },
+                { title: 'The Exorcist', releaseDateRaw: fifteenDaysAgo },
+                { title: 'Frankenstein', releaseDateRaw: thirtyDaysAgo },
             ]);
 
             expect(upcoming).toEqual([
-                { title: 'The Haunting of Hill House', publicationDate: tomorrow },
-                { title: 'Interview with the Vampire', publicationDate: fifteenDaysFromNow },
+                { title: 'The Haunting of Hill House', releaseDateRaw: tomorrow },
+                { title: 'Interview with the Vampire', releaseDateRaw: fifteenDaysFromNow },
             ]);
         });
 
