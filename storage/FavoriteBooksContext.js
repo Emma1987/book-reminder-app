@@ -29,8 +29,10 @@ export const FavoriteBooksProvider = ({ children }) => {
 
     const isFavorite = (bookId) => favorites.some((book) => book.id === bookId);
 
+    const getFavoriteById = (bookId) => favorites.find((book) => book.id === bookId);
+
     return (
-        <FavoriteBooksContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
+        <FavoriteBooksContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite, getFavoriteById }}>
             {children}
         </FavoriteBooksContext.Provider>
     );

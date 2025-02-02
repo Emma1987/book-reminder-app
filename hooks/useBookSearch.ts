@@ -18,11 +18,16 @@ export const useBookSearch = (query: string) => {
             try {
                 const booksFromApi = await getBooks(query);
 
+                const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
                 const searchWords = query.toLowerCase().split(' ');
                 const filteredBooks = booksFromApi.filter((book) => {
                     const title = book.title.toLowerCase();
                     const authors = book.authors?.map((author) => author.toLowerCase()).join(' ') || '';
-                    return searchWords.every((word) => title.includes(word) || authors.includes(word));
+                    return (
+                        searchWords.every((word) => title.includes(word) || authors.includes(word)) &&
+                        book.releaseDateRaw !== null &&
+                        fullDatePattern.test(book.releaseDateRaw)
+                    );
                 });
 
                 setBooks(filteredBooks);

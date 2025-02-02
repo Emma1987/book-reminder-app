@@ -9,3 +9,13 @@ export type BookType = {
     coverImage: string | null;
     language: string | null;
 };
+
+export type NotificationType = {
+    id: string;
+    bookId: string;
+    notificationIdentifier: any;
+    scheduledTime: Date;
+    title: string;
+    content: string;
+    readAt: Date | null;
+};

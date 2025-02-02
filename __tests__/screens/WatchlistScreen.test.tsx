@@ -1,11 +1,10 @@
 import React from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import { router } from 'expo-router';
-import { littleSecretsBook, hiddenPicturesBook, veryAnticipatedBook, FavoriteBooksContextWrapper } from '@/__tests__/__fixtures__/fixtures';
+import { littleSecretsBook, veryAnticipatedBook } from '@/__tests__/__fixtures__/fixtures';
 import WatchlistScreen from '@/app/(tabs)/index';
-import { BookCardWatchList } from '@/components/BookCardWatchList';
-import { EmptyState } from '@/components/EmptyState';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+import { NotificationContext } from '@/storage/NotificationContext';
 
 jest.mock('expo-router', () => ({
     router: {
@@ -16,9 +15,11 @@ jest.mock('expo-router', () => ({
 describe('WatchlistScreen', () => {
     it('renders the screen correctly when favorites is empty', () => {
         const { getByText } = render(
-            <FavoriteBooksContextWrapper>
-                <WatchlistScreen />
-            </FavoriteBooksContextWrapper>
+            <FavoriteBooksContext.Provider value={{favorites: [], removeFavorite: jest.fn()}}>
+                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
+                    <WatchlistScreen />
+                </NotificationContext.Provider>
+            </FavoriteBooksContext.Provider>
         );
 
         // Title is rendered
@@ -34,10 +35,12 @@ describe('WatchlistScreen', () => {
 
     it('renders upcoming books in the correct section', async () => {
         const favorites = [littleSecretsBook];
-        const { getByText, queryByText, debug } = render(
-            <FavoriteBooksContextWrapper favorites={favorites}>
-                <WatchlistScreen />
-            </FavoriteBooksContextWrapper>
+        const { getByText, queryByText } = render(
+            <FavoriteBooksContext.Provider value={{favorites: favorites, removeFavorite: jest.fn()}}>
+                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
+                    <WatchlistScreen />
+                </NotificationContext.Provider>
+            </FavoriteBooksContext.Provider>
         );
 
         // The empty state in the "Coming soon" is rendered
@@ -51,9 +54,11 @@ describe('WatchlistScreen', () => {
     it('renders available books in the correct section', async () => {
         const favorites = [veryAnticipatedBook];
         const { getByText, queryByText } = render(
-            <FavoriteBooksContextWrapper favorites={favorites}>
-                <WatchlistScreen />
-            </FavoriteBooksContextWrapper>
+            <FavoriteBooksContext.Provider value={{favorites: favorites, removeFavorite: jest.fn()}}>
+                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
+                    <WatchlistScreen />
+                </NotificationContext.Provider>
+            </FavoriteBooksContext.Provider>
         );
 
         // The book is displayed in the "Coming soon" section, and the empty state is not rendered
@@ -66,9 +71,11 @@ describe('WatchlistScreen', () => {
 
     it('calls router.replace when the "Browse Books" button is pressed', () => {
         const { getByText } = render(
-            <FavoriteBooksContextWrapper>
-                <WatchlistScreen />
-            </FavoriteBooksContextWrapper>
+            <FavoriteBooksContext.Provider value={{favorites: [], removeFavorite: jest.fn()}}>
+                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
+                    <WatchlistScreen />
+                </NotificationContext.Provider>
+            </FavoriteBooksContext.Provider>
         );
 
         const browseButton = getByText('Browse Books');

@@ -106,13 +106,13 @@ exports[`BookCardWatchList matches the snapshot 1`] = `
     style={
       {
         "alignItems": "center",
+        "gap": 5,
         "width": 30,
       }
     }
   >
     <View
-      accessibilityHint="Removes this book from your favorites list"
-      accessibilityLabel="Remove from favorites"
+      accessibilityLabel="Remove this book from your favorite list"
       accessibilityState={
         {
           "busy": undefined,

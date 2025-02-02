@@ -1,6 +1,4 @@
-import React, { PropsWithChildren } from 'react';
 import { addDays, subDays, format } from 'date-fns';
-import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 
 // Dates
 export const today = format(new Date(), 'yyyy-MM-dd');
@@ -48,31 +46,30 @@ export const veryAnticipatedBook = {
     coverImage: null,
 };
 
-const mockAddFavorite = jest.fn();
-const mockRemoveFavorite = jest.fn();
-const mockIsFavorite = jest.fn();
-export const FavoriteBooksContextWrapper = ({
-    children,
-    favorites = [],
-    addFavorite = mockAddFavorite,
-    removeFavorite = mockRemoveFavorite,
-    isFavorite = mockIsFavorite,
-}: PropsWithChildren<{
-    favorites?: any[];
-    addFavorite?: typeof mockAddFavorite;
-    removeFavorite?: typeof mockRemoveFavorite;
-    isFavorite?: typeof mockIsFavorite;
-}>) => {
-    return (
-        <FavoriteBooksContext.Provider
-            value={{
-                favorites,
-                addFavorite,
-                removeFavorite,
-                isFavorite,
-            }}
-        >
-            {children}
-        </FavoriteBooksContext.Provider>
-    );
+// Notifications
+export const littleSecretsBookNotification = {
+    id: '1',
+    bookId: '1',
+    notificationIdentifier: 'abcdef1',
+    scheduledTime: new Date('2020-05-07'),
+    title: 'New book release!',
+    content: 'Little Secrets is released today!'
+};
+
+export const hiddenPicturesBookNotification = {
+    id: '2',
+    bookId: '2',
+    notificationIdentifier: 'abcdef2',
+    scheduledTime: new Date('2024-10-17'),
+    title: 'New book release!',
+    content: 'Hidden Pictures is released today!'
+};
+
+export const veryAnticipatedBookNotification = {
+    id: '2',
+    bookId: '4',
+    notificationIdentifier: 'abcdef4',
+    scheduledTime: fifteenDaysFromNow,
+    title: 'New book release!',
+    content: 'Very anticipated book! is released today!'
 };

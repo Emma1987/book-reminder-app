@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Text, TouchableOpacity, View } from 'react-native';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
+import { littleSecretsBook } from '@/__tests__/__fixtures__/fixtures';
 import AddBookScreen from '@/app/(tabs)/add';
 import { useBookSearch } from '@/hooks/useBookSearch';
-import { littleSecretsBook } from '@/__tests__/__fixtures__/fixtures';
 
 jest.mock('@/hooks/useBookSearch', () => ({
     useBookSearch: jest.fn(),

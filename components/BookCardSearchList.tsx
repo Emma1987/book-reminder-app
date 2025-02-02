@@ -1,12 +1,15 @@
 import React, { useContext } from 'react';
-import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
 import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
+import { isPublished } from '@/helpers/BookHelper';
 import { formatDateStr } from '@/helpers/DateHelper';
+import { scheduleBookReleaseNotification } from '@/helpers/BookNotificationHelper';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+import { NotificationContext } from '@/storage/NotificationContext';
 
 type BookCardSearchListProps = {
     book: BookType;
@@ -15,6 +18,26 @@ type BookCardSearchListProps = {
 
 export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListProps) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
+    const { addNotification } = useContext(NotificationContext);
+
+    const getNotified = () => {
+        const alertContent = `📚 The book "${book.title}" is set to be released on ${formatDateStr(book.releaseDateRaw, 'monthFirst')}.\n\nWould you like to receive a notification on the release date?`;
+
+        Alert.alert('Stay Updated!', alertContent, [
+            {
+                text: 'No, thanks',
+                style: 'cancel',
+                onPress: () => console.log('Notification declined'),
+            },
+            {
+                text: 'Yes, notify me!',
+                style: 'default',
+                onPress: async () => {
+                    scheduleBookReleaseNotification(book, addNotification);
+                },
+            },
+        ]);
+    };
 
     const toggleFavorite = () => {
         Keyboard.dismiss();
@@ -22,6 +45,10 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListPro
         if (isFavorite(book.id)) {
             removeFavorite(book.id);
         } else {
+            if (!isPublished(book) && book.releaseDateRaw !== null) {
+                getNotified();
+            }
+
             addFavorite(book);
         }
     };
