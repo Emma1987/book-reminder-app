@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -9,13 +9,15 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFocusEffect } from 'expo-router';
 
 import { BookCardSearchList } from '@/components/BookCardSearchList';
 import { BookDetailModal } from '@/components/BookDetailModal';
-import { ThemedText } from '@/components/ThemedText';
+import { EmptySearchResult } from '@/components/EmptySearchResult';
+import { Header } from '@/components/Header';
 import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { useBookSearch } from '@/hooks/useBookSearch';
@@ -23,6 +25,7 @@ import { useBookSearch } from '@/hooks/useBookSearch';
 export default function AddBookScreen() {
     const [search, setSearch] = useState<string>('');
     const [selectedBook, setSelectedBook] = useState<BookType | null>(null);
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
 
     const { books, isLoading } = useBookSearch(search);
 
@@ -35,62 +38,81 @@ export default function AddBookScreen() {
     const searchBook = (text: string) => setSearch(text);
     const resetSearch = () => setSearch('');
 
+    useEffect(() => {
+        if (search !== '') {
+            const handler = setTimeout(() => {
+                setDebouncedSearch(search);
+                setSelectedBook(null);
+            }, 1000);
+
+            return () => clearTimeout(handler);
+        }
+
+        setDebouncedSearch(search);
+        setSelectedBook(null);
+    }, [search]);
+
     useFocusEffect(useCallback(() => setSearch(''), []));
 
     return (
-        <GestureHandlerRootView style={styles.container}>
-            {/* Input container */}
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(search) => searchBook(search)}
-                    value={search}
-                    placeholder="Search book"
-                    accessibilityLabel="Search for a book"
-                />
-                {search ? (
-                    <TouchableOpacity style={styles.icon} onPress={resetSearch}>
-                        <Ionicons name="close-outline" size={25} color="gray" accessibilityLabel="Clear search input" />
-                    </TouchableOpacity>
+        <SafeAreaView style={styles.container} edges={['top']}>
+            <GestureHandlerRootView>
+                <Header />
+
+                {/* Input container */}
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(search) => searchBook(search)}
+                        value={search}
+                        placeholder="Search book"
+                        accessibilityLabel="Search for a book"
+                    />
+                    {search ? (
+                        <TouchableOpacity style={styles.icon} onPress={resetSearch}>
+                            <Ionicons
+                                name="close-outline"
+                                size={25}
+                                color={Colors.primaryColor}
+                                accessibilityLabel="Clear search input"
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <Ionicons
+                            name="search-outline"
+                            size={25}
+                            color={Colors.primaryColor}
+                            style={styles.icon}
+                            accessibilityLabel="Search icon"
+                        />
+                    )}
+                </View>
+
+                {/* Results container */}
+                {isLoading ? (
+                    <View style={styles.spinnerContainer}>
+                        <ActivityIndicator size="large" color={Colors.pink} accessibilityHint="Loading" />
+                        <Text style={styles.loadingText}>Loading books...</Text>
+                    </View>
                 ) : (
-                    <Ionicons
-                        name="search-outline"
-                        size={25}
-                        color="gray"
-                        style={styles.icon}
-                        accessibilityLabel="Search icon"
+                    <FlatList
+                        data={books}
+                        keyExtractor={(item: BookType) => item.id}
+                        renderItem={({ item }) => (
+                            <BookCardSearchList book={item} onSeeDetails={() => openModal(item)} />
+                        )}
+                        ListEmptyComponent={
+                            !(isLoading || debouncedSearch === '') ? <EmptySearchResult /> : <View></View>
+                        }
+                        refreshing={isLoading}
+                        keyboardShouldPersistTaps="handled"
                     />
                 )}
-            </View>
 
-            {/* Results container */}
-            {isLoading ? (
-                <View style={styles.spinnerContainer}>
-                    <ActivityIndicator size="large" color="#FF69B4" accessibilityHint="Loading" />
-                    <Text style={styles.loadingText}>Loading books...</Text>
-                </View>
-            ) : (
-                <FlatList
-                    data={books}
-                    keyExtractor={(item: BookType) => item.id}
-                    renderItem={({ item }) => <BookCardSearchList book={item} onSeeDetails={() => openModal(item)} />}
-                    ListEmptyComponent={
-                        !(isLoading || search === '') ? (
-                            <View style={styles.empty}>
-                                <ThemedText type="info">No results found</ThemedText>
-                            </View>
-                        ) : (
-                            <View></View>
-                        )
-                    }
-                    refreshing={isLoading}
-                    keyboardShouldPersistTaps="handled"
-                />
-            )}
-
-            {/* Details modal */}
-            {selectedBook && <BookDetailModal visible={!!selectedBook} onClose={closeModal} book={selectedBook} />}
-        </GestureHandlerRootView>
+                {/* Details modal */}
+                {selectedBook && <BookDetailModal visible={!!selectedBook} onClose={closeModal} book={selectedBook} />}
+            </GestureHandlerRootView>
+        </SafeAreaView>
     );
 }
 
@@ -99,16 +121,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     inputContainer: {
-        position: 'relative',
-        height: 130,
-        backgroundColor: Colors.pink,
-        justifyContent: 'flex-end',
         padding: 10,
     },
     input: {
         height: 45,
-        borderWidth: 1,
-        borderColor: Colors.gray,
+        borderWidth: 2,
+        borderColor: Colors.primaryColor,
+        color: Colors.primaryColor,
+        fontWeight: 500,
         borderRadius: 10,
         padding: 10,
     },
@@ -127,9 +147,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.gray,
     },
-    empty: {
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
+    flatlist: {
+        flex: 1,
+        paddingBottom: 0,
     },
 });
