@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyNotification matches the snapshot 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "marginVertical": 50,
+    }
+  }
+>
+  <Image
+    accessibilityLabel="No notification"
+    accessibilityRole="image"
+    resizeMode="contain"
+    source={
+      {
+        "testUri": "../../../assets/images/no-notification.png",
+      }
+    }
+    style={
+      {
+        "height": 200,
+      }
+    }
+  />
+  <Text
+    style={
+      [
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [
+          {
+            "textAlign": "center",
+          },
+        ],
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    No notification yet!
+  </Text>
+</View>
+`;

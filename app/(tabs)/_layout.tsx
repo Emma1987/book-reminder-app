@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Tabs } from 'expo-router';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
+import { NotificationContext } from '@/storage/NotificationContext';
 
 export default function TabLayout() {
+    const { unreadNotifications } = useContext(NotificationContext);
+
     return (
         <Tabs
             screenOptions={{
@@ -24,18 +27,22 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="add"
                 options={{
-                    title: 'Add Books',
+                    title: 'Add Book',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name="alerts"
+                name="notifications"
                 options={{
-                    title: 'Alerts',
+                    title: 'Notifications',
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} />
+                        <TabBarIcon
+                            name={focused ? 'notifications' : 'notifications-outline'}
+                            color={color}
+                            badgeCount={unreadNotifications}
+                        />
                     ),
                 }}
             />

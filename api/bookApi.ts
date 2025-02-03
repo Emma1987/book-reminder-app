@@ -45,7 +45,7 @@ export const getBooks = async (search: string): Promise<BookType[]> => {
         const requestParams = new URLSearchParams({
             q: `"${search.replace(/ /g, '+')}"`,
             langRestrict: 'en',
-            maxResults: '10',
+            maxResults: '40',
             key: apiKey,
             printType: 'books',
             orderBy: 'relevance',

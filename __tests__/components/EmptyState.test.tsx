@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { render, fireEvent } from '@testing-library/react-native';
 import { EmptyState } from '@/components/EmptyState';
 
@@ -65,7 +64,7 @@ describe('EmptyState', () => {
     });
 
     it('matches the snapshot', () => {
-        const tree = renderer.create(
+        const tree = render(
             <EmptyState
                 title="No Data"
                 description="Add items to see them here."

@@ -63,3 +63,36 @@ export const getDateObject = (dateString: string): Date | null => {
 
     return null;
 };
+
+export const timeAgo = (date: Date) => {
+    const now = new Date().getTime();
+    const scheduledTime = new Date(date).getTime();
+
+    const diffInMs = now - scheduledTime;
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+
+    if (isNaN(diffInMinutes)) {
+        return '';
+    }
+
+    if (diffInMinutes < 60) {
+        if (diffInMinutes < 1) {
+            return 'now';
+        }
+
+        return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+        return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) {
+        return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`;
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    return `${diffInMonths} month${diffInMonths === 1 ? '' : 's'} ago`;
+};
