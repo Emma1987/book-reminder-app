@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View, ViewToken } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 
 import { EmptyNotification } from '@/components/EmptyNotification';
+import { Header } from '@/components/Header';
 import { NotificationCard } from '@/components/NotificationCard';
 import { ThemedText } from '@/components/ThemedText';
 import { NotificationType } from '@/components/types';
@@ -56,10 +58,12 @@ export default function NotificationsScreen() {
     }, [isFocused]);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <ThemedText type="title" textAlign="center">
-                    Notifications <Ionicons name="notifications" size={25} color="black" />
+        <SafeAreaView style={styles.container}>
+            <Header />
+
+            <View style={styles.subHeaderContainer}>
+                <ThemedText type="defaultSemiBold" style={styles.subHeaderContainerText}>
+                    <Ionicons name="notifications" size={15} color={Colors.whitesmoke} /> Notifications
                 </ThemedText>
             </View>
 
@@ -76,7 +80,7 @@ export default function NotificationsScreen() {
                 ListEmptyComponent={<EmptyNotification />}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -84,11 +88,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    headerContainer: {
-        position: 'relative',
-        height: 130,
-        backgroundColor: Colors.pink,
-        justifyContent: 'flex-end',
-        padding: 10,
+    subHeaderContainer: {
+        backgroundColor: Colors.primaryColor,
+        alignItems: 'center',
+        padding: 20,
+    },
+    subHeaderContainerText: {
+        color: Colors.whitesmoke,
     },
 });

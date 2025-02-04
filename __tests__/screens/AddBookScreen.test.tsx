@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { littleSecretsBook } from '@/__tests__/__fixtures__/fixtures';
 import AddBookScreen from '@/app/(tabs)/add';
 import { useBookSearch } from '@/hooks/useBookSearch';
@@ -107,7 +107,9 @@ describe('AddBookScreen', () => {
         const input = getByPlaceholderText('Search book');
         fireEvent.changeText(input, 'Test Search');
 
-        expect(getByText('No results found')).toBeTruthy();
+        await waitFor(() => {
+            expect(getByText('No results found')).toBeTruthy();
+        }, { timeout: 1100 });
     });
 
     it('clears search when close icon is pressed', () => {

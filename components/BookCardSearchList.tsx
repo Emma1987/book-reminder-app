@@ -56,51 +56,55 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListPro
     return (
         <View style={styles.container}>
             {/* Book Cover */}
-            <Image
-                source={
-                    book.coverImage ? { uri: book.coverImage } : require('@/assets/images/book-cover-placeholder.jpg')
-                }
-                style={styles.bookCover}
-                accessibilityRole="image"
-                accessibilityLabel="Book cover"
-            />
+            <TouchableOpacity
+                onPress={() => onSeeDetails(book)}
+                accessibilityLabel="View book details"
+                accessibilityHint={`View more details about ${book.title}`}
+                style={styles.containerContent}
+            >
+                <Image
+                    source={
+                        book.coverImage
+                            ? { uri: book.coverImage }
+                            : require('@/assets/images/book-cover-placeholder.jpg')
+                    }
+                    style={styles.bookCover}
+                    accessibilityRole="image"
+                    accessibilityLabel="Book cover"
+                />
 
-            {/* Book Description */}
-            <View style={styles.bookDescription}>
-                <ThemedText type="subtitle">{book.title}</ThemedText>
-                <ThemedText type="defaultSemiBold">{book.authors?.[0] ?? ''}</ThemedText>
-                <Text>Release date: {formatDateStr(book.releaseDateRaw)}</Text>
-            </View>
+                {/* Book Description */}
+                <View style={styles.bookDescription}>
+                    <ThemedText type="subtitle">{book.title}</ThemedText>
+                    <ThemedText type="defaultSemiBold">{book.authors?.[0] ?? ''}</ThemedText>
+                    <Text>Release date: {formatDateStr(book.releaseDateRaw)}</Text>
+                </View>
 
-            {/* Action Icons */}
-            <View style={styles.actions}>
-                <TouchableOpacity
-                    onPress={toggleFavorite}
-                    accessibilityLabel="Add to favorites"
-                    accessibilityHint="Adds this book to your favorites list"
-                >
-                    {isFavorite(book.id) && <Ionicons name="heart" size={25} color={Colors.red} />}
-                    {!isFavorite(book.id) && <Ionicons name="heart-outline" size={25} color={Colors.gray} />}
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => onSeeDetails(book)}
-                    accessibilityLabel="View book details"
-                    accessibilityHint={`View more details about ${book.title}`}
-                >
-                    <Ionicons name="information-circle-outline" size={25} color={Colors.gray} />
-                </TouchableOpacity>
-            </View>
+                {/* Action Icons */}
+                <View style={styles.actions}>
+                    <TouchableOpacity
+                        onPress={toggleFavorite}
+                        accessibilityLabel="Add to favorites"
+                        accessibilityHint="Adds this book to your favorites list"
+                    >
+                        {isFavorite(book.id) && <Ionicons name="heart" size={25} color={Colors.red} />}
+                        {!isFavorite(book.id) && <Ionicons name="heart-outline" size={25} color={Colors.gray} />}
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
         borderColor: Colors.white,
+    },
+    containerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     bookCover: {
         width: 60,
@@ -111,8 +115,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     actions: {
-        width: 60,
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        width: 40,
     },
 });

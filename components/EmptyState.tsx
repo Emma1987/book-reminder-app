@@ -25,7 +25,7 @@ export function EmptyState({ title, description, imageSource, buttonText, onButt
                 <ThemedText type="defaultSemiBold" textAlign="center">
                     {title}
                 </ThemedText>
-                <ThemedText type="info" textAlign="center">
+                <ThemedText type="info" textAlign="center" style={styles.descriptionInfo}>
                     {description}
                 </ThemedText>
                 {buttonText && onButtonPress && (
@@ -35,7 +35,7 @@ export function EmptyState({ title, description, imageSource, buttonText, onButt
                         accessibilityRole="button"
                         accessibilityLabel={buttonText}
                     >
-                        <Text>{buttonText}</Text>
+                        <Text style={styles.buttonText}>{buttonText}</Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -45,24 +45,27 @@ export function EmptyState({ title, description, imageSource, buttonText, onButt
 
 const styles = StyleSheet.create({
     container: {
-        minHeight: 1,
-        flexDirection: 'row',
         marginVertical: 20,
+        alignItems: 'center',
     },
     image: {
-        width: '30%',
-        height: 100,
+        height: 200,
     },
     description: {
         width: '70%',
-        alignSelf: 'center',
+    },
+    descriptionInfo: {
+        fontStyle: 'italic',
     },
     button: {
         alignSelf: 'center',
-        marginTop: 10,
+        marginTop: 20,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.secondaryColor,
         borderRadius: 5,
+    },
+    buttonText: {
+        color: Colors.white,
     },
 });

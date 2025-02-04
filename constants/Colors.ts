@@ -1,11 +1,12 @@
 export const Colors = {
+    primaryColor: '#6a8fa4',
+    secondaryColor: '#8e7258',
+
     lightGray: '#ccc',
     gray: 'gray',
-    pink: '#ffdff4',
+    pink: '#ff69b4',
     white: 'white',
     whitesmoke: 'whitesmoke',
     red: '#ff645c',
     gold: '#d4af37',
-    tint: '#0a7ea4',
-    icon: '#687076',
 };
