@@ -1,5 +1,5 @@
-import { NotificationType, BookType } from '@/components/types';
 import { scheduleNotification } from '@/helpers/NotificationHelper';
+import { NotificationType, BookType } from '@/types/types';
 
 const createNotification = (book: BookType, trigger: Date): NotificationType => {
     return {

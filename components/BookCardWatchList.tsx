@@ -3,13 +3,15 @@ import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
-import { BookType, NotificationType } from '@/components/types';
+import { BookType, NotificationType } from '@/types/types';
 import { Colors } from '@/constants/Colors';
 import { isPublished } from '@/helpers/BookHelper';
 import { scheduleBookReleaseNotification } from '@/helpers/BookNotificationHelper';
 import { formatDateStr } from '@/helpers/DateHelper';
+import i18n from '@/i18n/translations';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 import { NotificationContext } from '@/storage/NotificationContext';
+import { SettingsContext } from '@/storage/SettingsContext';
 
 type BookCardWatchListProps = {
     book: BookType;
@@ -18,20 +20,24 @@ type BookCardWatchListProps = {
 export function BookCardWatchList({ book }: BookCardWatchListProps) {
     const { removeFavorite } = useContext(FavoriteBooksContext);
     const { addNotification, removeNotification, getNotificationByBookId } = useContext(NotificationContext);
+    const { applicationLanguage } = useContext(SettingsContext);
 
     const notification: NotificationType | undefined = getNotificationByBookId(book.id);
 
     const getNotified = () => {
-        const alertContent = `📚 The book "${book.title}" is set to be released on ${formatDateStr(book.releaseDateRaw, 'monthFirst')}.\n\nWould you like to receive a notification on the release date?`;
+        const alertContent = i18n.t('book_notification.content', {
+            bookTitle: book.title,
+            bookReleaseDateRaw: formatDateStr(book.releaseDateRaw, applicationLanguage),
+        });
 
-        Alert.alert('Stay Updated!', alertContent, [
+        Alert.alert(i18n.t('book_notification.title'), alertContent, [
             {
-                text: 'No, thanks',
+                text: i18n.t('book_notification.cancel_button'),
                 style: 'cancel',
                 onPress: () => console.log('Notification declined'),
             },
             {
-                text: 'Yes, notify me!',
+                text: i18n.t('book_notification.accept_button'),
                 style: 'default',
                 onPress: async () => {
                     scheduleBookReleaseNotification(book, addNotification);
@@ -51,14 +57,14 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
     };
 
     const handleRemoveFavorite = () => {
-        Alert.alert('Remove Favorite', `Are you sure you want to remove "${book.title}" from your favorites?`, [
+        Alert.alert(i18n.t('remove_favorites.title'), i18n.t('remove_favorites.content', { bookTitle: book.title }), [
             {
-                text: 'Cancel',
+                text: i18n.t('remove_favorites.cancel_button'),
                 style: 'cancel',
                 onPress: () => {},
             },
             {
-                text: 'Remove',
+                text: i18n.t('remove_favorites.accept_button'),
                 style: 'destructive',
                 onPress: () => {
                     if (notification) {
@@ -87,7 +93,11 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
             <View style={styles.bookDescription}>
                 <ThemedText type="defaultSemiBold">{book.title}</ThemedText>
                 <ThemedText type="default">{book.authors?.[0] ?? ''}</ThemedText>
-                <ThemedText type="info">Release date: {formatDateStr(book.releaseDateRaw)}</ThemedText>
+                <ThemedText type="info">
+                    {i18n.t('book_details.release_date', {
+                        releaseDate: formatDateStr(book.releaseDateRaw, applicationLanguage),
+                    })}
+                </ThemedText>
             </View>
 
             {/* Action Icons */}
@@ -95,7 +105,7 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
                 {!isPublished(book) && (
                     <TouchableOpacity
                         onPress={handleToggleNotification}
-                        accessibilityLabel="Notify me when the book is released"
+                        accessibilityLabel={i18n.t('book_notification.button_label')}
                     >
                         <Ionicons
                             name={notification ? 'notifications' : 'notifications-off'}
@@ -106,7 +116,7 @@ export function BookCardWatchList({ book }: BookCardWatchListProps) {
                 )}
                 <TouchableOpacity
                     onPress={handleRemoveFavorite}
-                    accessibilityLabel="Remove this book from your favorite list"
+                    accessibilityLabel={i18n.t('remove_favorites.button_label')}
                 >
                     <Ionicons name="trash-outline" size={20} color={Colors.red} />
                 </TouchableOpacity>

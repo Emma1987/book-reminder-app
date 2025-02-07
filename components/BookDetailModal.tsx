@@ -4,10 +4,12 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { Separator } from '@/components/Separator';
 import { ThemedText } from '@/components/ThemedText';
-import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { formatDateStr } from '@/helpers/DateHelper';
+import i18n from '@/i18n/translations';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { BookType } from '@/types/types';
 
 type BookDetailModalProps = {
     visible: boolean;
@@ -17,6 +19,7 @@ type BookDetailModalProps = {
 
 export function BookDetailModal({ visible, onClose, book }: BookDetailModalProps) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
+    const { applicationLanguage } = useContext(SettingsContext);
     const bottomSheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['50%', '90%'], []);
 
@@ -44,35 +47,44 @@ export function BookDetailModal({ visible, onClose, book }: BookDetailModalProps
         >
             <BottomSheetScrollView style={styles.bottomSheetView}>
                 {/* Book Cover */}
-                {book.coverImage && <Image source={{ uri: book.coverImage }} style={styles.bookCover} />}
+                {book.coverImage && (
+                    <Image
+                        source={{ uri: book.coverImage }}
+                        style={styles.bookCover}
+                        accessibilityRole="image"
+                        accessibilityLabel={i18n.t('book_details.book_cover_label')}
+                    />
+                )}
 
                 {/* Title, author and publication date */}
                 <ThemedText type="subtitle" textAlign="center">
                     {book.title}
                 </ThemedText>
                 <ThemedText type="defaultSemiBold" textAlign="center" marginBottom="10">
-                    Author: {book.authors?.join(', ')}
+                    {i18n.t('book_details.author', { authorName: book.authors?.join(', ') })}
                 </ThemedText>
                 <ThemedText type="info" textAlign="center" marginBottom="10">
-                    Release date: {formatDateStr(book.releaseDateRaw)}
+                    {i18n.t('book_details.release_date', {
+                        releaseDate: formatDateStr(book.releaseDateRaw, applicationLanguage),
+                    })}
                 </ThemedText>
 
                 {/* Language */}
                 {book.language && (
                     <ThemedText type="info" textAlign="center" marginBottom="10">
-                        Language: {book.language.toUpperCase()}
+                        {i18n.t('book_details.language', { language: book.language.toUpperCase() })}
                     </ThemedText>
                 )}
 
                 {/* ISBN */}
                 {book.isbn10 && (
                     <ThemedText type="info" textAlign="center">
-                        ISBN10: {book.isbn10}
+                        {i18n.t('book_details.isbn10', { isbn: book.isbn10 })}
                     </ThemedText>
                 )}
                 {book.isbn13 && (
                     <ThemedText type="info" textAlign="center">
-                        ISBN13: {book.isbn13}
+                        {i18n.t('book_details.isbn13', { isbn: book.isbn13 })}
                     </ThemedText>
                 )}
 
@@ -87,12 +99,12 @@ export function BookDetailModal({ visible, onClose, book }: BookDetailModalProps
                 {/* Add to favs Button */}
                 {isFavorite(book.id) && (
                     <TouchableOpacity style={[styles.button, styles.removeFavButton]} onPress={toggleFavorite}>
-                        <Text style={styles.buttonText}>Remove from favorites</Text>
+                        <Text style={styles.buttonText}>{i18n.t('remove_favorites.title')}</Text>
                     </TouchableOpacity>
                 )}
                 {!isFavorite(book.id) && (
                     <TouchableOpacity style={[styles.button, styles.addFavButton]} onPress={toggleFavorite}>
-                        <Text style={styles.buttonText}>Add to favorites</Text>
+                        <Text style={styles.buttonText}>{i18n.t('book_details.add_favorites')}</Text>
                     </TouchableOpacity>
                 )}
             </BottomSheetScrollView>
@@ -120,7 +132,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginBottom: 50,
         borderRadius: 5,
-        width: 150,
+        width: 200,
         alignSelf: 'center',
     },
     buttonText: {

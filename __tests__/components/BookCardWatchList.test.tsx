@@ -2,10 +2,10 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { render, fireEvent } from '@testing-library/react-native';
 import { hiddenPicturesBook, veryAnticipatedBook, veryAnticipatedBookNotification } from '@/__tests__/__fixtures__/fixtures';
+import { ContextWrapper } from '@/__tests__/__fixtures__/context';
 import { BookCardWatchList } from '@/components/BookCardWatchList';
-import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
-import { NotificationContext } from '@/storage/NotificationContext';
 
+jest.mock('expo-localization');
 jest.spyOn(Alert, 'alert');
 
 describe('BookCardWatchList', () => {
@@ -15,16 +15,14 @@ describe('BookCardWatchList', () => {
 
     it('renders book information correctly', () => {
         const { getByText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         );
 
         expect(getByText('Hidden Pictures')).toBeTruthy();
         expect(getByText('Jason Rekulak')).toBeTruthy();
-        expect(getByText('Release date: 17 Oct 2024')).toBeTruthy();
+        expect(getByText('Release date: Oct 17, 2024')).toBeTruthy();
     });
 
     it('renders only first author when several authors', () => {
@@ -34,16 +32,14 @@ describe('BookCardWatchList', () => {
         };
 
         const { getByText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={mockBookWithSeveralAuthors} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={mockBookWithSeveralAuthors} />
+            </ContextWrapper>
         );
 
         expect(getByText('Hidden Pictures')).toBeTruthy();
         expect(getByText('Stephen King')).toBeTruthy();
-        expect(getByText('Release date: 17 Oct 2024')).toBeTruthy();
+        expect(getByText('Release date: Oct 17, 2024')).toBeTruthy();
     });
 
     it('renders placeholder image when coverImage is null', () => {
@@ -53,11 +49,9 @@ describe('BookCardWatchList', () => {
         };
 
         const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={mockBookWithoutCover} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={mockBookWithoutCover} />
+            </ContextWrapper>
         );
 
         const image = getByLabelText('Book cover');
@@ -66,31 +60,38 @@ describe('BookCardWatchList', () => {
 
     it('renders book cover when coverImage is provided', () => {
         const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         );
     
         const image = getByLabelText('Book cover');
         expect(image.props.source).toEqual({ uri: 'https://book.com/hidden-pictures-cover.jpg' });
     });
 
-    it('shows a confirmation dialog when delete button is clicked', () => {
+    it('has correct accessibility labels for the button', () => {
         const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         );
 
-        const deleteButton = getByLabelText('Remove this book from your favorite list');
+        const deleteButton = getByLabelText('Remove this book from your favorites');
+        expect(deleteButton).toBeTruthy();
+    });
+
+    it('shows a confirmation dialog when delete button is clicked', () => {
+        const { getByLabelText } = render(
+            <ContextWrapper>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
+        );
+
+        const deleteButton = getByLabelText('Remove this book from your favorites');
         fireEvent.press(deleteButton);
 
         expect(Alert.alert).toHaveBeenCalledWith(
-            'Remove Favorite',
+            'Remove from favorites',
             `Are you sure you want to remove "Hidden Pictures" from your favorites?`,
             expect.any(Array)
         );
@@ -100,14 +101,12 @@ describe('BookCardWatchList', () => {
         const mockRemoveFavorite = jest.fn();
         
         const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: mockRemoveFavorite}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper removeFavorite={mockRemoveFavorite}>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         );
 
-        const deleteButton = getByLabelText('Remove this book from your favorite list');
+        const deleteButton = getByLabelText('Remove this book from your favorites');
         fireEvent.press(deleteButton);
 
         const [, positiveButton] = Alert.alert.mock.calls[0][2];
@@ -120,14 +119,12 @@ describe('BookCardWatchList', () => {
         const mockRemoveFavorite = jest.fn();
 
         const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: mockRemoveFavorite}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper removeFavorite={mockRemoveFavorite}>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         );
 
-        const deleteButton = getByLabelText('Remove this book from your favorite list');
+        const deleteButton = getByLabelText('Remove this book from your favorites');
         fireEvent.press(deleteButton);
 
         const [negativeButton] = Alert.alert.mock.calls[0][2];
@@ -136,26 +133,11 @@ describe('BookCardWatchList', () => {
         expect(mockRemoveFavorite).not.toHaveBeenCalled();
     });
 
-    it('has correct accessibility labels for the button', () => {
-        const { getByLabelText } = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
-        );
-
-        const deleteButton = getByLabelText('Remove this book from your favorite list');
-        expect(deleteButton).toBeTruthy();
-    });
-
     it('displays the correct notification icon if there is no notification', async () => {
-        const { getByLabelText, getByTestId } = render(
-            <FavoriteBooksContext.Provider value={{ removeFavorite: jest.fn() }}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: () => undefined}}>
-                    <BookCardWatchList book={veryAnticipatedBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+        const { getByLabelText } = render(
+            <ContextWrapper>
+                <BookCardWatchList book={veryAnticipatedBook} />
+            </ContextWrapper>
         );
 
         const notificationIcon = getByLabelText('Notify me when the book is released');
@@ -164,12 +146,10 @@ describe('BookCardWatchList', () => {
     });
 
     it('displays the correct notification icon if there is a notification', async () => {
-        const { getByLabelText, getByTestId } = render(
-            <FavoriteBooksContext.Provider value={{ removeFavorite: jest.fn() }}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: () => veryAnticipatedBookNotification}}>
-                    <BookCardWatchList book={veryAnticipatedBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+        const { getByLabelText } = render(
+            <ContextWrapper getNotificationByBookId={() => veryAnticipatedBookNotification}>
+                <BookCardWatchList book={veryAnticipatedBook} />
+            </ContextWrapper>
         );
 
         const notificationIcon = getByLabelText('Notify me when the book is released');
@@ -179,11 +159,9 @@ describe('BookCardWatchList', () => {
 
     it('matches the snapshot', () => {
         const tree = render(
-            <FavoriteBooksContext.Provider value={{removeFavorite: jest.fn()}}>
-                <NotificationContext.Provider value={{addNotification: jest.fn(), removeNotification: jest.fn(), getNotificationByBookId: jest.fn()}}>
-                    <BookCardWatchList book={hiddenPicturesBook} />
-                </NotificationContext.Provider>
-            </FavoriteBooksContext.Provider>
+            <ContextWrapper>
+                <BookCardWatchList book={hiddenPicturesBook} />
+            </ContextWrapper>
         ).toJSON();
 
         expect(tree).toMatchSnapshot();

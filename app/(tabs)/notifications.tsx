@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View, ViewToken } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 
 import { EmptyNotification } from '@/components/EmptyNotification';
 import { Header } from '@/components/Header';
 import { NotificationCard } from '@/components/NotificationCard';
-import { ThemedText } from '@/components/ThemedText';
-import { NotificationType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
+import i18n from '@/i18n/translations';
 import { NotificationContext } from '@/storage/NotificationContext';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { NotificationType } from '@/types/types';
 
 export default function NotificationsScreen() {
     const { notifications, updateNotification, loadNotifications } = useContext(NotificationContext);
+    const { applicationLanguage } = useContext(SettingsContext);
     const [sortedNotifications, setSortedNotifications] = useState<NotificationType[]>([]);
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -59,13 +60,7 @@ export default function NotificationsScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header />
-
-            <View style={styles.subHeaderContainer}>
-                <ThemedText type="defaultSemiBold" style={styles.subHeaderContainerText}>
-                    <Ionicons name="notifications" size={15} color={Colors.whitesmoke} /> Notifications
-                </ThemedText>
-            </View>
+            <Header subHeaderText={i18n.t('notifications_screen.subheader')} subHeaderIcon={'notifications'} />
 
             <FlatList
                 ref={flatListRef}

@@ -3,13 +3,15 @@ import { Alert, Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from
 import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
-import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { isPublished } from '@/helpers/BookHelper';
-import { formatDateStr } from '@/helpers/DateHelper';
 import { scheduleBookReleaseNotification } from '@/helpers/BookNotificationHelper';
+import { formatDateStr } from '@/helpers/DateHelper';
+import i18n from '@/i18n/translations';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
 import { NotificationContext } from '@/storage/NotificationContext';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { BookType } from '@/types/types';
 
 type BookCardSearchListProps = {
     book: BookType;
@@ -19,18 +21,22 @@ type BookCardSearchListProps = {
 export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListProps) {
     const { addFavorite, removeFavorite, isFavorite } = useContext(FavoriteBooksContext);
     const { addNotification } = useContext(NotificationContext);
+    const { applicationLanguage } = useContext(SettingsContext);
 
     const getNotified = () => {
-        const alertContent = `📚 The book "${book.title}" is set to be released on ${formatDateStr(book.releaseDateRaw, 'monthFirst')}.\n\nWould you like to receive a notification on the release date?`;
+        const alertContent = i18n.t('book_notification.content', {
+            bookTitle: book.title,
+            bookReleaseDateRaw: formatDateStr(book.releaseDateRaw, applicationLanguage),
+        });
 
-        Alert.alert('Stay Updated!', alertContent, [
+        Alert.alert(i18n.t('book_notification.title'), alertContent, [
             {
-                text: 'No, thanks',
+                text: i18n.t('book_notification.cancel_button'),
                 style: 'cancel',
                 onPress: () => console.log('Notification declined'),
             },
             {
-                text: 'Yes, notify me!',
+                text: i18n.t('book_notification.accept_button'),
                 style: 'default',
                 onPress: async () => {
                     scheduleBookReleaseNotification(book, addNotification);
@@ -58,8 +64,8 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListPro
             {/* Book Cover */}
             <TouchableOpacity
                 onPress={() => onSeeDetails(book)}
-                accessibilityLabel="View book details"
-                accessibilityHint={`View more details about ${book.title}`}
+                accessibilityLabel={i18n.t('book_details.view_details_label', { bookTitle: book.title })}
+                accessibilityHint={i18n.t('book_details.view_details_label', { bookTitle: book.title })}
                 style={styles.containerContent}
             >
                 <Image
@@ -70,22 +76,26 @@ export function BookCardSearchList({ book, onSeeDetails }: BookCardSearchListPro
                     }
                     style={styles.bookCover}
                     accessibilityRole="image"
-                    accessibilityLabel="Book cover"
+                    accessibilityLabel={i18n.t('book_details.book_cover_label')}
                 />
 
                 {/* Book Description */}
                 <View style={styles.bookDescription}>
                     <ThemedText type="subtitle">{book.title}</ThemedText>
                     <ThemedText type="defaultSemiBold">{book.authors?.[0] ?? ''}</ThemedText>
-                    <Text>Release date: {formatDateStr(book.releaseDateRaw)}</Text>
+                    <Text>
+                        {i18n.t('book_details.release_date', {
+                            releaseDate: formatDateStr(book.releaseDateRaw, applicationLanguage),
+                        })}
+                    </Text>
                 </View>
 
                 {/* Action Icons */}
                 <View style={styles.actions}>
                     <TouchableOpacity
                         onPress={toggleFavorite}
-                        accessibilityLabel="Add to favorites"
-                        accessibilityHint="Adds this book to your favorites list"
+                        accessibilityLabel={i18n.t('book_details.add_favorites')}
+                        accessibilityHint={i18n.t('book_details.add_favorites')}
                     >
                         {isFavorite(book.id) && <Ionicons name="heart" size={25} color={Colors.red} />}
                         {!isFavorite(book.id) && <Ionicons name="heart-outline" size={25} color={Colors.gray} />}

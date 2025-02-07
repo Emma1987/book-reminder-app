@@ -3,10 +3,13 @@ import { Tabs } from 'expo-router';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
+import i18n from '@/i18n/translations';
 import { NotificationContext } from '@/storage/NotificationContext';
+import { SettingsContext } from '@/storage/SettingsContext';
 
 export default function TabLayout() {
     const { unreadNotifications } = useContext(NotificationContext);
+    const { applicationLanguage } = useContext(SettingsContext);
 
     return (
         <Tabs
@@ -18,7 +21,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'My List',
+                    title: i18n.t('tab_bar.index'),
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
                     ),
@@ -27,7 +30,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="add"
                 options={{
-                    title: 'Add Book',
+                    title: i18n.t('tab_bar.add'),
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
                     ),
@@ -36,13 +39,22 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="notifications"
                 options={{
-                    title: 'Notifications',
+                    title: i18n.t('tab_bar.notifications'),
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? 'notifications' : 'notifications-outline'}
                             color={color}
                             badgeCount={unreadNotifications}
                         />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="settings"
+                options={{
+                    title: i18n.t('tab_bar.settings'),
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'settings' : 'settings-outline'} color={color} />
                     ),
                 }}
             />

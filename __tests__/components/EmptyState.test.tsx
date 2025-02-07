@@ -2,7 +2,13 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { EmptyState } from '@/components/EmptyState';
 
+jest.mock('expo-localization');
+
 describe('EmptyState', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('renders title, description, and button', () => {
         const mockPress = jest.fn();
         const { getByText } = render(
@@ -32,7 +38,7 @@ describe('EmptyState', () => {
             />
         );
 
-        const image = getByLabelText('Empty state image');
+        const image = getByLabelText('No books found illustration');
         expect(image.props.source).toEqual(testImage);
     });
 

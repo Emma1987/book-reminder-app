@@ -98,8 +98,7 @@ exports[`BookCardWatchList matches the snapshot 1`] = `
         ]
       }
     >
-      Release date: 
-      17 Oct 2024
+      Release date: Oct 17, 2024
     </Text>
   </View>
   <View
@@ -112,7 +111,7 @@ exports[`BookCardWatchList matches the snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Remove this book from your favorite list"
+      accessibilityLabel="Remove this book from your favorites"
       accessibilityState={
         {
           "busy": undefined,

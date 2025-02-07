@@ -2,20 +2,26 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { itBook } from '@/__tests__/__fixtures__/fixtures';
+import { ContextWrapper } from '@/__tests__/__fixtures__/context';
 import { BookDetailModal } from '@/components/BookDetailModal';
-import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+
+jest.mock('expo-localization');
 
 describe('BookDetailModal', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('renders book details correctly', () => {
         const { getByText, debug } = render(
-            <FavoriteBooksContext.Provider value={{addFavorite: jest.fn(), removeFavorite: jest.fn(), isFavorite: jest.fn()}}>
+            <ContextWrapper>
                 <BookDetailModal visible={true} onClose={jest.fn()} book={itBook} />
-            </FavoriteBooksContext.Provider>
+            </ContextWrapper>
         );
 
         expect(getByText('It')).toBeTruthy();
         expect(getByText('Author: Stephen King')).toBeTruthy();
-        expect(getByText('Release date: 1 Oct 1987')).toBeTruthy();
+        expect(getByText('Release date: Oct 1, 1987')).toBeTruthy();
         expect(getByText('ISBN10: 0450411435')).toBeTruthy();
         expect(getByText('ISBN13: 9780450411434')).toBeTruthy();
         expect(getByText('Welcome to Derry, Maine...')).toBeTruthy();
@@ -25,12 +31,12 @@ describe('BookDetailModal', () => {
         const mockAddFavorite = jest.fn();
         
         const { getByText } = render(
-            <FavoriteBooksContext.Provider value={{addFavorite: mockAddFavorite, removeFavorite: jest.fn(), isFavorite: jest.fn()}}>
+            <ContextWrapper addFavorite={mockAddFavorite}>
                 <BookDetailModal visible={true} onClose={jest.fn()} book={itBook} />
-            </FavoriteBooksContext.Provider>
+            </ContextWrapper>
         );
 
-        fireEvent.press(getByText('Add to favorites'));
+        fireEvent.press(getByText('Add this book to your favorites'));
         expect(mockAddFavorite).toHaveBeenCalledWith(itBook);
     });
 
@@ -40,9 +46,9 @@ describe('BookDetailModal', () => {
         mockIsFavorite.mockReturnValue(true);
 
         const { getByText } = render(
-            <FavoriteBooksContext.Provider value={{addFavorite: jest.fn(), removeFavorite: mockRemoveFavorite, isFavorite: mockIsFavorite}}>
+            <ContextWrapper removeFavorite={mockRemoveFavorite} isFavorite={mockIsFavorite}>
                 <BookDetailModal visible={true} onClose={jest.fn()} book={itBook} />
-            </FavoriteBooksContext.Provider>
+            </ContextWrapper>
         );
 
         fireEvent.press(getByText('Remove from favorites'));
@@ -51,9 +57,9 @@ describe('BookDetailModal', () => {
 
     it('matches the snapshot', () => {
         const tree = render(
-            <FavoriteBooksContext.Provider value={{addFavorite: jest.fn(), removeFavorite: jest.fn(), isFavorite: jest.fn()}}>
+            <ContextWrapper>
                 <BookDetailModal visible={true} onClose={jest.fn()} book={itBook} />
-            </FavoriteBooksContext.Provider>
+            </ContextWrapper>
         ).toJSON();
 
         expect(tree).toMatchSnapshot();

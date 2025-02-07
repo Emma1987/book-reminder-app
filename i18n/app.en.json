@@ -1,0 +1,128 @@
+{
+    "en": {
+        "tab_bar": {
+            "index": "My list",
+            "add": "Add book",
+            "notifications": "Notifications",
+            "settings": "Settings"
+        },
+        "index": {
+            "subheader": "Stay updated on the latest book releases!",
+            "coming_soon": "Coming Soon ({{number}})",
+            "coming_soon_placeholder": "See all upcoming books",
+            "available": "Available Now ({{number}})",
+            "available_placeholder": "See books that are already available"
+        },
+        "add_screen": {
+            "input_placeholder": "Search for a book",
+            "clear_input_icon_label": "Clear search field",
+            "search_icon_label": "Search",
+            "loading_text": "Loading books..."
+        },
+        "notifications_screen": {
+            "subheader": "Notifications",
+            "empty_notifications": "No notifications yet!",
+            "notification_title": "New release! 🚨",
+            "notification_content_today": "📚 \"{{bookTitle}}\" is released today! 🥳",
+            "notification_content_past": "📚 \"{{bookTitle}}\" was released on {{bookReleaseDate}}!"
+        },
+        "settings_screen": {
+            "subheader": "Settings",
+            "app_title": "Application",
+            "app_language_label": "App language",
+            "book_api_title": "Book Search",
+            "book_api_language_label": "Book language",
+            "select_placeholder": "Select"
+        },
+        "book_details": {
+            "view_details_label": "View more details about \"{{bookTitle}}\"",
+            "book_cover_label": "Book cover",
+            "add_favorites": "Add this book to your favorites",
+            "author": "Author:  {{authorName}}",
+            "release_date": "Release date: {{releaseDate}}",
+            "language": "Language: {{language}}",
+            "isbn10": "ISBN10: {{isbn}}",
+            "isbn13": "ISBN13: {{isbn}}"
+        },
+        "empty_state": {
+            "illustration_label": "No books found illustration"
+        },
+        "empty_state_coming_soon": {
+            "title": "No upcoming books yet!",
+            "description": "Add books to your watchlist to track their release dates here.",
+            "button_text": "Browse Books"
+        },
+        "empty_state_available": {
+            "title": "No books available yet!",
+            "description": "None of the books in your watchlist have been published yet."
+        },
+        "book_notification": {
+            "title": "Stay Updated!",
+            "content": "📚 The book \"{{bookTitle}}\" is scheduled for release on {{bookReleaseDateRaw}}.\n\nWould you like to receive a notification on its release date?",
+            "cancel_button": "No, thanks",
+            "accept_button": "Yes, notify me!",
+            "button_label": "Notify me when the book is released"
+        },
+        "remove_favorites": {
+            "title": "Remove from favorites",
+            "content": "Are you sure you want to remove \"{{bookTitle}}\" from your favorites?",
+            "cancel_button": "Cancel",
+            "accept_button": "Remove",
+            "button_label": "Remove this book from your favorites"
+        },
+        "empty_search_result": {
+            "no_result_icon": "No books found",
+            "title": "No results found",
+            "help": "Have you tried searching by the book title and author?"
+        },
+        "time_ago": {
+            "now": "now",
+            "minutes_ago_count": {
+                "one": "1 minute ago",
+                "other": "{{count}} minutes ago"
+            },
+            "hours_ago_count": {
+                "one": "1 hour ago",
+                "other": "{{count}} hours ago"
+            },
+            "days_ago_count": {
+                "one": "1 day ago",
+                "other": "{{count}} days ago"
+            },
+            "months_ago_count": {
+                "one": "1 month ago",
+                "other": "{{count}} months ago"
+            }
+        },
+        "languages": {
+            "hy": "Armenian",
+            "bg": "Bulgarian",
+            "zh-CN": "Chinese",
+            "hr": "Croatian",
+            "da": "Danish",
+            "nl": "Dutch",
+            "en": "English",
+            "fi": "Finnish",
+            "fr": "French",
+            "de": "German",
+            "el": "Greek",
+            "hu": "Hungarian",
+            "is": "Icelandic",
+            "it": "Italian",
+            "ja": "Japanese",
+            "ko": "Korean",
+            "no": "Norwegian",
+            "pl": "Polish",
+            "pt-PT": "Portuguese",
+            "ro": "Romanian",
+            "sr": "Serbian",
+            "sk": "Slovak",
+            "sl": "Slovenian",
+            "es": "Spanish",
+            "sv": "Swedish",
+            "th": "Thai",
+            "uk": "Ukrainian",
+            "vi": "Vietnamese"
+        }
+    }
+}

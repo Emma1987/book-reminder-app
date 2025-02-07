@@ -11,8 +11,8 @@ exports[`BookCardSearchList matches the snapshot 1`] = `
   }
 >
   <View
-    accessibilityHint="View more details about Little Secrets"
-    accessibilityLabel="View book details"
+    accessibilityHint="View more details about "Little Secrets""
+    accessibilityLabel="View more details about "Little Secrets""
     accessibilityState={
       {
         "busy": undefined,
@@ -115,8 +115,7 @@ exports[`BookCardSearchList matches the snapshot 1`] = `
         Jennifer Hillier
       </Text>
       <Text>
-        Release date: 
-        7 May 2020
+        Release date: May 7, 2020
       </Text>
     </View>
     <View
@@ -127,8 +126,8 @@ exports[`BookCardSearchList matches the snapshot 1`] = `
       }
     >
       <View
-        accessibilityHint="Adds this book to your favorites list"
-        accessibilityLabel="Add to favorites"
+        accessibilityHint="Add this book to your favorites"
+        accessibilityLabel="Add this book to your favorites"
         accessibilityState={
           {
             "busy": undefined,

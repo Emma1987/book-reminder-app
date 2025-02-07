@@ -10,7 +10,7 @@ exports[`EmptyNotification matches the snapshot 1`] = `
   }
 >
   <Image
-    accessibilityLabel="No notification"
+    accessibilityLabel="No notifications yet!"
     accessibilityRole="image"
     resizeMode="contain"
     source={
@@ -47,7 +47,7 @@ exports[`EmptyNotification matches the snapshot 1`] = `
       ]
     }
   >
-    No notification yet!
+    No notifications yet!
   </Text>
 </View>
 `;
