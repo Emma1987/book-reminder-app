@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { isToday } from 'date-fns';
 
 import { ThemedText } from '@/components/ThemedText';
-import { NotificationType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
-import { timeAgo } from '@/helpers/DateHelper';
+import { formatDateStr, getDateObject, timeAgo } from '@/helpers/DateHelper';
+import i18n from '@/i18n/translations';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { BookType, NotificationType } from '@/types/types';
 
 type NotificationCardProps = {
     notification: NotificationType;
@@ -14,10 +17,8 @@ type NotificationCardProps = {
 
 export function NotificationCard({ notification }: NotificationCardProps) {
     const { getFavoriteById } = useContext(FavoriteBooksContext);
-
+    const { applicationLanguage } = useContext(SettingsContext);
     const [timeAgoString, setTimeAgoString] = useState(timeAgo(notification.scheduledTime));
-
-    const now = new Date();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -25,12 +26,26 @@ export function NotificationCard({ notification }: NotificationCardProps) {
         }, 60000);
 
         return () => clearInterval(interval);
-    }, [notification.scheduledTime]);
+    }, []);
 
-    const book = getFavoriteById(notification.bookId);
+    useEffect(() => {
+        setTimeAgoString(timeAgo(notification.scheduledTime));
+    }, [applicationLanguage, notification.scheduledTime]);
+
+    const now = new Date();
+    const book: BookType | undefined = getFavoriteById(notification.bookId);
     if (new Date(notification.scheduledTime) > now || !book) {
         return;
     }
+
+    const releaseDate = getDateObject(book.releaseDateRaw);
+    const notificationContent =
+        releaseDate && isToday(releaseDate)
+            ? i18n.t('notifications_screen.notification_content_today', { bookTitle: book.title })
+            : i18n.t('notifications_screen.notification_content_past', {
+                  bookTitle: book.title,
+                  bookReleaseDate: formatDateStr(book.releaseDateRaw, applicationLanguage),
+              });
 
     return (
         <View style={styles.container}>
@@ -43,12 +58,12 @@ export function NotificationCard({ notification }: NotificationCardProps) {
                     }
                     style={styles.bookCover}
                     accessibilityRole="image"
-                    accessibilityLabel="Book cover"
+                    accessibilityLabel={i18n.t('book_details.book_cover_label')}
                 />
             </View>
             <View style={styles.notificationContent}>
                 <View style={styles.title}>
-                    <ThemedText type="defaultSemiBold">New release!</ThemedText>
+                    <ThemedText type="defaultSemiBold">{i18n.t('notifications_screen.notification_title')}</ThemedText>
                     <View style={styles.notificationDate}>
                         <ThemedText type="info">{timeAgoString}</ThemedText>
                         {!notification.readAt && (
@@ -56,7 +71,7 @@ export function NotificationCard({ notification }: NotificationCardProps) {
                         )}
                     </View>
                 </View>
-                <Text>{notification.content}</Text>
+                <Text>{notificationContent}</Text>
             </View>
         </View>
     );

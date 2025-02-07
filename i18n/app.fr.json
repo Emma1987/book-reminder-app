@@ -1,0 +1,128 @@
+{
+    "fr": {
+        "tab_bar": {
+            "index": "Liste",
+            "add": "Ajouter livre",
+            "notifications": "Notifications",
+            "settings": "Paramètres"
+        },
+        "index": {
+            "subheader": "Reste informé des dernières sorties de livres !",
+            "coming_soon": "À Paraître ({{number}})",
+            "coming_soon_placeholder": "Voir tous les livres à paraître",
+            "available": "Déjà disponible ({{number}})",
+            "available_placeholder": "Voir les livres déjà disponibles"
+        },
+        "add_screen": {
+            "input_placeholder": "Rechercher un livre",
+            "clear_input_icon_label": "Effacer le champ de recherche",
+            "search_icon_label": "Rechercher",
+            "loading_text": "Chargement des livres..."
+        },
+        "notifications_screen": {
+            "subheader": "Notifications",
+            "empty_notifications": "Aucune notification pour le moment !",
+            "notification_title": "Nouvelle sortie 🚨",
+            "notification_content_today": "📚 \"{{bookTitle}}\" sort aujourd’hui ! 🥳",
+            "notification_content_past": "📚 \"{{bookTitle}}\" est sorti le {{bookReleaseDate}} !"
+        },
+        "settings_screen": {
+            "subheader": "Paramètres",
+            "app_title": "Application",
+            "app_language_label": "Langue de l’application",
+            "book_api_title": "Recherche de livres",
+            "book_api_language_label": "Langue des livres",
+            "select_placeholder": "Sélectionner"
+        },
+        "book_details": {
+            "view_details_label": "Voir plus de détails sur \"{{bookTitle}}\"",
+            "book_cover_label": "Couverture du livre",
+            "add_favorites": "Ajouter ce livre à vos favoris",
+            "author": "Auteur:  {{authorName}}",
+            "release_date": "Date de sortie : {{releaseDate}}",
+            "language": "Langue: {{language}}",
+            "isbn10": "ISBN10: {{isbn}}",
+            "isbn13": "ISBN13: {{isbn}}"
+        },
+        "empty_state": {
+            "illustration_label": "Illustration Aucun livre trouvé"
+        },
+        "empty_state_coming_soon": {
+            "title": "Aucun livre à paraître !",
+            "description": "Ajoute des livres à ta liste pour suivre leurs dates de sortie ici.",
+            "button_text": "Parcourir les livres"
+        },
+        "empty_state_available": {
+            "title": "Aucun livre déjà publié !",
+            "description": "Aucun des livres de ta liste n’a encore été publié."
+        },
+        "book_notification": {
+            "title": "Reste à jour !",
+            "content": "📚 Le livre \"{{bookTitle}}\" est prévu pour une sortie le {{bookReleaseDateRaw}}.\n\nSouhaite-tu recevoir une notification le jour de sa sortie ?",
+            "cancel_button": "Non, merci",
+            "accept_button": "Oui, notifie-moi !",
+            "button_label": "Notifier lors de la sortie du livre"
+        },
+        "remove_favorites": {
+            "title": "Supprimer des favoris",
+            "content": "Es-tu sûr de vouloir retirer \"{{bookTitle}}\" de tes favoris?",
+            "cancel_button": "Annuler",
+            "accept_button": "Supprimer",
+            "button_label": "Retirer ce livre de mes favoris"
+        },
+        "empty_search_result": {
+            "no_result_icon": "Aucun livre trouvé",
+            "title": "Aucun résultat trouvé",
+            "help": "Avez-vous essayé de rechercher par titre de livre et auteur ?"
+        },
+        "time_ago": {
+            "now": "maintenant",
+            "minutes_ago_count": {
+                "one": "il y a 1 minute",
+                "other": "il y a {{count}} minutes"
+            },
+            "hours_ago_count": {
+                "one": "il y a 1 heure",
+                "other": "il y a {{count}} heures"
+            },
+            "days_ago_count": {
+                "one": "il y a 1 jour",
+                "other": "il y a {{count}} jours"
+            },
+            "months_ago_count": {
+                "one": "il y a 1 mois",
+                "other": "il y a {{count}} mois"
+            }
+        },
+        "languages": {
+            "hy": "Arménien",
+            "bg": "Bulgare",
+            "zh-CN": "Chinois",
+            "hr": "Croate",
+            "da": "Danois",
+            "nl": "Néerlandais",
+            "en": "Anglais",
+            "fi": "Finnois",
+            "fr": "Français",
+            "de": "Allemand",
+            "el": "Grec",
+            "hu": "Hongrois",
+            "is": "Islandais",
+            "it": "Italien",
+            "ja": "Japonais",
+            "ko": "Coréen",
+            "no": "Norvégien",
+            "pl": "Polonais",
+            "pt-PT": "Portugais",
+            "ro": "Roumain",
+            "sr": "Serbe",
+            "sk": "Slovaque",
+            "sl": "Slovène",
+            "es": "Espagnol",
+            "sv": "Suédois",
+            "th": "Thaï",
+            "uk": "Ukrainien",
+            "vi": "Vietnamien"
+        }
+    }
+}

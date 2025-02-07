@@ -7,9 +7,10 @@ import ErrorBoundary from 'react-native-error-boundary';
 import 'react-native-reanimated';
 import * as Notifications from 'expo-notifications';
 
-import { NotificationProvider } from '@/storage/NotificationContext';
-import { FavoriteBooksProvider } from '@/storage/FavoriteBooksContext';
 import { requestNotificationPermission } from '@/helpers/NotificationHelper';
+import { FavoriteBooksProvider } from '@/storage/FavoriteBooksContext';
+import { NotificationProvider } from '@/storage/NotificationContext';
+import { SettingsProvider } from '@/storage/SettingsContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -45,10 +46,12 @@ export default function RootLayout() {
         <ErrorBoundary>
             <FavoriteBooksProvider>
                 <NotificationProvider>
-                    <Stack>
-                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                        <Stack.Screen name="+not-found" />
-                    </Stack>
+                    <SettingsProvider>
+                        <Stack>
+                            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                            <Stack.Screen name="+not-found" />
+                        </Stack>
+                    </SettingsProvider>
                 </NotificationProvider>
             </FavoriteBooksProvider>
         </ErrorBoundary>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getBooks } from '@/api/bookApi';
-import { BookType } from '@/components/types';
+import { BookType } from '@/types/types';
 import debounce from 'lodash.debounce';
 
-export const useBookSearch = (query: string) => {
+export const useBookSearch = (query: string, langRestrict: string = '') => {
     const [books, setBooks] = useState<BookType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -16,7 +16,7 @@ export const useBookSearch = (query: string) => {
         const fetchBooks = debounce(async () => {
             setIsLoading(true);
             try {
-                const booksFromApi = await getBooks(query);
+                const booksFromApi = await getBooks(query, langRestrict);
 
                 const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
                 const searchWords = query.toLowerCase().split(' ');
@@ -41,7 +41,7 @@ export const useBookSearch = (query: string) => {
 
         fetchBooks();
         return () => fetchBooks.cancel();
-    }, [query]);
+    }, [langRestrict, query]);
 
     return { books, isLoading };
 };

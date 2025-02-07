@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import { littleSecretsBookNotification, hiddenPicturesBookNotification } from '@/__tests__/__fixtures__/fixtures';
-import { NotificationContext } from '@/storage/NotificationContext';
+import { ContextWrapper } from '@/__tests__/__fixtures__/context';
 import NotificationsScreen from '@/app/(tabs)/notifications';
 
-// Mock components
 jest.mock('@react-navigation/native', () => ({
     useIsFocused: jest.fn(() => true), // Always return focused
 }));
+jest.mock('expo-localization');
 
 jest.mock('@/components/NotificationCard', () => {
     const React = require('react');
@@ -33,36 +33,28 @@ jest.mock('@/components/EmptyNotification', () => {
 });
 
 describe('NotificationsScreen', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('renders notifications correctly', async () => {
-        const { findByText } = render(
-            <NotificationContext.Provider
-                value={{
-                    notifications: [littleSecretsBookNotification, hiddenPicturesBookNotification],
-                    updateNotification: jest.fn(),
-                    loadNotifications: jest.fn(),
-                }}
-            >
+        const { getByText } = render(
+            <ContextWrapper notifications={[littleSecretsBookNotification, hiddenPicturesBookNotification]}>
                 <NotificationsScreen />
-            </NotificationContext.Provider>
+            </ContextWrapper>
         );
 
-        expect(findByText('New book released!')).toBeTruthy();
-        expect(findByText('Another book released!')).toBeTruthy();
+        expect(getByText('Little Secrets is released today!')).toBeTruthy();
+        expect(getByText('Hidden Pictures is released today!')).toBeTruthy();
     });
 
     it('shows empty state if no notifications', async () => {
-        const { findByText } = render(
-            <NotificationContext.Provider
-                value={{
-                    notifications: [],
-                    updateNotification: jest.fn(),
-                    loadNotifications: jest.fn(),
-                }}
-            >
+        const { getByText } = render(
+            <ContextWrapper notifications={[]}>
                 <NotificationsScreen />
-            </NotificationContext.Provider>
+            </ContextWrapper>
         );
 
-        expect(findByText('No Notifications')).toBeTruthy();
+        expect(getByText('No Notifications')).toBeTruthy();
     });
 });

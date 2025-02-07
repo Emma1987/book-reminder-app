@@ -74,8 +74,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        Author: 
-        Stephen King
+        Author:  Stephen King
       </Text>
       <Text
         style={
@@ -104,8 +103,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        Release date: 
-        1 Oct 1987
+        Release date: Oct 1, 1987
       </Text>
       <Text
         style={
@@ -134,8 +132,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        Language: 
-        EN
+        Language: EN
       </Text>
       <Text
         style={
@@ -160,8 +157,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        ISBN10: 
-        0450411435
+        ISBN10: 0450411435
       </Text>
       <Text
         style={
@@ -186,8 +182,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
           ]
         }
       >
-        ISBN13: 
-        9780450411434
+        ISBN13: 9780450411434
       </Text>
       <View>
         <View
@@ -249,7 +244,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
             "opacity": 1,
             "paddingHorizontal": 20,
             "paddingVertical": 10,
-            "width": 150,
+            "width": 200,
           }
         }
       >
@@ -262,7 +257,7 @@ exports[`BookDetailModal matches the snapshot 1`] = `
             }
           }
         >
-          Add to favorites
+          Add this book to your favorites
         </Text>
       </View>
     </View>

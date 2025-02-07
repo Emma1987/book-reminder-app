@@ -3,26 +3,26 @@ import { formatDateStr, getDateObject, timeAgo } from '@/helpers/DateHelper';
 
 describe('DateHelper functions', () => {
     describe('formatDateStr function', () => {
-        it('formats a full date with dayFirst param correctly', () => {
-            expect(formatDateStr('2024-11-20')).toBe('20 Nov 2024');
-            expect(formatDateStr('2024-11')).toBe('Nov 2024');
-            expect(formatDateStr('2024')).toBe('2024');
+        it('formats a full date with lang "en"', () => {
+            expect(formatDateStr('2024-11-20', 'en')).toBe('Nov 20, 2024');
+            expect(formatDateStr('2024-11', 'en')).toBe('Nov 2024');
+            expect(formatDateStr('2024', 'en')).toBe('2024');
 
-            expect(formatDateStr('22')).toBeNull();
-            expect(formatDateStr(12)).toBeNull();
-            expect(formatDateStr('invalid-date')).toBeNull();
-            expect(getDateObject(null)).toBeNull();
+            expect(formatDateStr('22', 'en')).toBeNull();
+            expect(formatDateStr(12, 'en')).toBeNull();
+            expect(formatDateStr('invalid-date', 'en')).toBeNull();
+            expect(getDateObject(null, 'en')).toBeNull();
         });
 
-        it('formats a full date with monthFirst param correctly', () => {
-            expect(formatDateStr('2024-11-20', 'monthFirst')).toBe('Nov 20, 2024');
-            expect(formatDateStr('2024-11', 'monthFirst')).toBe('Nov 2024');
-            expect(formatDateStr('2024', 'monthFirst')).toBe('2024');
+        it('formats a full date with with lang "fr"', () => {
+            expect(formatDateStr('2024-11-20', 'fr')).toBe('20 nov. 2024');
+            expect(formatDateStr('2024-11', 'fr')).toBe('Nov 2024');
+            expect(formatDateStr('2024', 'fr')).toBe('2024');
 
-            expect(formatDateStr('22', 'monthFirst')).toBeNull();
-            expect(formatDateStr(12, 'monthFirst')).toBeNull();
-            expect(formatDateStr('invalid-date', 'monthFirst')).toBeNull();
-            expect(getDateObject(null, 'monthFirst')).toBeNull();
+            expect(formatDateStr('22', 'fr')).toBeNull();
+            expect(formatDateStr(12, 'fr')).toBeNull();
+            expect(formatDateStr('invalid-date', 'fr')).toBeNull();
+            expect(getDateObject(null, 'fr')).toBeNull();
         });
     });
 

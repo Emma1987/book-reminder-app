@@ -1,5 +1,5 @@
 import { isBefore, startOfDay } from 'date-fns';
-import { BookType } from '@/components/types';
+import { BookType } from '@/types/types';
 
 export const isPublished = (book: BookType): boolean => {
     if (!book.releaseDateRaw) {

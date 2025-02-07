@@ -1,16 +1,17 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { littleSecretsBook } from '@/__tests__/__fixtures__/fixtures';
+import { ContextWrapper } from '@/__tests__/__fixtures__/context';
 import AddBookScreen from '@/app/(tabs)/add';
 import { useBookSearch } from '@/hooks/useBookSearch';
 
 jest.mock('@/hooks/useBookSearch', () => ({
     useBookSearch: jest.fn(),
 }));
-
 jest.mock('expo-router', () => ({
     useFocusEffect: jest.fn(),
 }));
+jest.mock('expo-localization');
 
 jest.mock('@/components/BookCardSearchList', () => {
     const React = require('react');
@@ -51,47 +52,55 @@ describe('AddBookScreen', () => {
     it('renders input field and search icon initially', () => {
         useBookSearch.mockReturnValue({ books: [], isLoading: false });
         const { getByPlaceholderText, getByLabelText } = render(
-            <AddBookScreen />
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
-        expect(getByPlaceholderText('Search book')).toBeTruthy();
-        expect(getByLabelText('Search icon')).toBeTruthy();
+        expect(getByPlaceholderText('Search for a book')).toBeTruthy();
+        expect(getByLabelText('Search')).toBeTruthy();
     });
 
     it('renders clear icon when input is filled', () => {
         useBookSearch.mockReturnValue({ books: [], isLoading: false });
-        const { getByPlaceholderText, getByLabelText, queryByLabelText } = render(
-            <AddBookScreen />
+        const { getByPlaceholderText, queryByLabelText } = render(
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
             
-        const input = getByPlaceholderText('Search book');
+        const input = getByPlaceholderText('Search for a book');
         
         // Initially, only the search icon should be present
-        expect(queryByLabelText('Search icon')).toBeTruthy();
-        expect(queryByLabelText('Clear search input')).toBeNull();
+        expect(queryByLabelText('Search')).toBeTruthy();
+        expect(queryByLabelText('Clear search field')).toBeNull();
     
         // Simulate entering text in the input
         fireEvent.changeText(input, 'Test Search');
     
         // After entering text, the clear icon should appear
-        expect(queryByLabelText('Clear search input')).toBeTruthy();
-        expect(queryByLabelText('Search icon')).toBeNull();
+        expect(queryByLabelText('Clear search field')).toBeTruthy();
+        expect(queryByLabelText('Search')).toBeNull();
     });
 
     it('displays a spinner when loading', () => {
         useBookSearch.mockReturnValue({ books: [], isLoading: true });
         const { getByText, getByAccessibilityHint } = render(
-            <AddBookScreen />
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
-        expect(getByAccessibilityHint('Loading')).toBeTruthy();
+        expect(getByAccessibilityHint('Loading books...')).toBeTruthy();
         expect(getByText('Loading books...')).toBeTruthy();
     });
 
     it('renders search results', async () => {
         useBookSearch.mockReturnValue({ books: [littleSecretsBook], isLoading: false });
-        const { getByText, queryByText } = render(
-            <AddBookScreen />
+        const { queryByText } = render(
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
         expect(queryByText('Little Secrets')).toBeTruthy();
@@ -101,10 +110,12 @@ describe('AddBookScreen', () => {
     it('shows empty state when no books found', async () => {
         useBookSearch.mockReturnValue({ books: [], isLoading: false });
         const { getByText, getByPlaceholderText } = render(
-            <AddBookScreen />
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
-        const input = getByPlaceholderText('Search book');
+        const input = getByPlaceholderText('Search for a book');
         fireEvent.changeText(input, 'Test Search');
 
         await waitFor(() => {
@@ -114,14 +125,16 @@ describe('AddBookScreen', () => {
 
     it('clears search when close icon is pressed', () => {
         const { getByPlaceholderText, getByLabelText } = render(
-            <AddBookScreen />
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
-        const input = getByPlaceholderText('Search book');
+        const input = getByPlaceholderText('Search for a book');
         fireEvent.changeText(input, 'Some search');
         expect(input.props.value).toBe('Some search');
 
-        const clearIcon = getByLabelText('Clear search input');
+        const clearIcon = getByLabelText('Clear search field');
         fireEvent.press(clearIcon);
         expect(input.props.value).toBe('');
     });
@@ -129,7 +142,9 @@ describe('AddBookScreen', () => {
     it('opens and closes the book detail modal', async () => {
         useBookSearch.mockReturnValue({ books: [littleSecretsBook], isLoading: false });
         const { getByText, queryByText, queryByTestId, debug } = render(
-            <AddBookScreen />
+            <ContextWrapper>
+                <AddBookScreen />
+            </ContextWrapper>
         );
 
         const bookCard = getByText('Little Secrets');

@@ -6,11 +6,12 @@ import { router } from 'expo-router';
 import { BookCardWatchList } from '@/components/BookCardWatchList';
 import { EmptyState } from '@/components/EmptyState';
 import { Header } from '@/components/Header';
-import { ThemedText } from '@/components/ThemedText';
-import { BookType } from '@/components/types';
+import i18n from '@/i18n/translations';
 import { Colors } from '@/constants/Colors';
 import { sortFavorites } from '@/helpers/BookHelper';
 import { FavoriteBooksContext } from '@/storage/FavoriteBooksContext';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { BookType } from '@/types/types';
 
 enum MenuEnum {
     COMING_SOON = 'comming-soon',
@@ -19,6 +20,7 @@ enum MenuEnum {
 
 export default function WatchlistScreen() {
     const { favorites } = useContext(FavoriteBooksContext);
+    const { applicationLanguage } = useContext(SettingsContext);
     const { published, upcoming } = useMemo(() => sortFavorites(favorites), [favorites]);
     const [menu, setMenu] = useState<MenuEnum>(MenuEnum.COMING_SOON);
 
@@ -32,29 +34,27 @@ export default function WatchlistScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header />
-
-            <View style={styles.subHeaderContainer}>
-                <ThemedText type="defaultSemiBold" style={styles.subHeaderContainerText}>
-                    Stay updated on the latest releases!
-                </ThemedText>
-            </View>
+            <Header subHeaderText={i18n.t('index.subheader')} />
 
             <View style={styles.contentContainer}>
                 <View style={styles.menu}>
                     <TouchableOpacity
                         onPress={() => setMenu(MenuEnum.COMING_SOON)}
-                        accessibilityLabel="See all the books coming soon"
+                        accessibilityLabel={i18n.t('index.coming_soon_placeholder')}
                         style={getMenuItemStyle(MenuEnum.COMING_SOON)}
                     >
-                        <Text style={styles.menuItemText}>Coming Soon ({upcoming.length})</Text>
+                        <Text style={styles.menuItemText}>
+                            {i18n.t('index.coming_soon', { number: upcoming.length })}
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => setMenu(MenuEnum.AVAILABLE)}
-                        accessibilityLabel="See the books already available"
+                        accessibilityLabel={i18n.t('index.available_placeholder')}
                         style={getMenuItemStyle(MenuEnum.AVAILABLE)}
                     >
-                        <Text style={styles.menuItemText}>Available Now ({published.length})</Text>
+                        <Text style={styles.menuItemText}>
+                            {i18n.t('index.available', { number: published.length })}
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
@@ -65,10 +65,10 @@ export default function WatchlistScreen() {
                         renderItem={({ item }) => <BookCardWatchList book={item} />}
                         ListEmptyComponent={
                             <EmptyState
-                                title="No upcoming books here!"
-                                description="Add some books to your watchlist to see their release dates here."
+                                title={i18n.t('empty_state_coming_soon.title')}
+                                description={i18n.t('empty_state_coming_soon.description')}
                                 imageSource={require('@/assets/images/no-book.png')}
-                                buttonText="Browse Books"
+                                buttonText={i18n.t('empty_state_coming_soon.button_text')}
                                 onButtonPress={() => router.replace('/add')}
                             />
                         }
@@ -82,8 +82,8 @@ export default function WatchlistScreen() {
                         renderItem={({ item }) => <BookCardWatchList book={item} />}
                         ListEmptyComponent={
                             <EmptyState
-                                title="No books already published!"
-                                description="None of the books in your watchlist are already published."
+                                title={i18n.t('empty_state_available.title')}
+                                description={i18n.t('empty_state_available.description')}
                                 imageSource={require('@/assets/images/no-book.png')}
                             />
                         }
@@ -97,14 +97,6 @@ export default function WatchlistScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    subHeaderContainer: {
-        backgroundColor: Colors.primaryColor,
-        alignItems: 'center',
-        padding: 20,
-    },
-    subHeaderContainerText: {
-        color: Colors.whitesmoke,
     },
     contentContainer: {
         paddingHorizontal: 10,

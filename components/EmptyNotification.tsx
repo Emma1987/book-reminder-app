@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
+import i18n from '@/i18n/translations';
 
 export function EmptyNotification() {
     return (
@@ -11,10 +12,10 @@ export function EmptyNotification() {
                 style={styles.image}
                 resizeMode="contain"
                 accessibilityRole="image"
-                accessibilityLabel="No notification"
+                accessibilityLabel={i18n.t('notifications_screen.empty_notifications')}
             />
             <ThemedText type="default" textAlign="center">
-                No notification yet!
+                {i18n.t('notifications_screen.empty_notifications')}
             </ThemedText>
         </View>
     );

@@ -75,7 +75,7 @@ exports[`EmptySearchResult matches the snapshot 1`] = `
       ]
     }
   >
-    Have you tried searching with the title of the book and the author?
+    Have you tried searching by the book title and author?
   </Text>
 </View>
 `;

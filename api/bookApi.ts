@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/apiClient';
-import { BookType } from '@/components/types';
+import { BookType } from '@/types/types';
 
 const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
@@ -36,21 +36,25 @@ const getBookEntity = (book: any): BookType | undefined => {
     };
 };
 
-export const getBooks = async (search: string): Promise<BookType[]> => {
+export const getBooks = async (search: string, langRestrict: string = ''): Promise<BookType[]> => {
     try {
         if (!apiKey) {
             throw new Error('API key is missing');
         }
 
-        const requestParams = new URLSearchParams({
+        const requestParamsObject: Record<string, string> = {
             q: `"${search.replace(/ /g, '+')}"`,
-            langRestrict: 'en',
             maxResults: '40',
             key: apiKey,
             printType: 'books',
             orderBy: 'relevance',
-        });
+        };
 
+        if (langRestrict) {
+            requestParamsObject.langRestrict = langRestrict;
+        }
+
+        const requestParams = new URLSearchParams(requestParamsObject);
         const response = await apiClient.get(`/volumes`, { params: requestParams });
         const apiResponse = response.data.items ?? [];
 

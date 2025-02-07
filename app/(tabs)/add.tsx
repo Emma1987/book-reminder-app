@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import {
     ActivityIndicator,
     FlatList,
@@ -18,16 +18,20 @@ import { BookCardSearchList } from '@/components/BookCardSearchList';
 import { BookDetailModal } from '@/components/BookDetailModal';
 import { EmptySearchResult } from '@/components/EmptySearchResult';
 import { Header } from '@/components/Header';
-import { BookType } from '@/components/types';
 import { Colors } from '@/constants/Colors';
 import { useBookSearch } from '@/hooks/useBookSearch';
+import i18n from '@/i18n/translations';
+import { SettingsContext } from '@/storage/SettingsContext';
+import { BookType } from '@/types/types';
 
 export default function AddBookScreen() {
+    const { applicationLanguage, bookApiLanguage } = useContext(SettingsContext);
+
     const [search, setSearch] = useState<string>('');
     const [selectedBook, setSelectedBook] = useState<BookType | null>(null);
     const [debouncedSearch, setDebouncedSearch] = useState(search);
 
-    const { books, isLoading } = useBookSearch(search);
+    const { books, isLoading } = useBookSearch(search, bookApiLanguage);
 
     const openModal = (book: BookType) => {
         setSelectedBook(book);
@@ -65,8 +69,9 @@ export default function AddBookScreen() {
                         style={styles.input}
                         onChangeText={(search) => searchBook(search)}
                         value={search}
-                        placeholder="Search book"
-                        accessibilityLabel="Search for a book"
+                        placeholder={i18n.t('add_screen.input_placeholder')}
+                        accessibilityLabel={i18n.t('add_screen.input_placeholder')}
+                        autoCorrect={false}
                     />
                     {search ? (
                         <TouchableOpacity style={styles.icon} onPress={resetSearch}>
@@ -74,7 +79,7 @@ export default function AddBookScreen() {
                                 name="close-outline"
                                 size={25}
                                 color={Colors.primaryColor}
-                                accessibilityLabel="Clear search input"
+                                accessibilityLabel={i18n.t('add_screen.clear_input_icon_label')}
                             />
                         </TouchableOpacity>
                     ) : (
@@ -83,7 +88,7 @@ export default function AddBookScreen() {
                             size={25}
                             color={Colors.primaryColor}
                             style={styles.icon}
-                            accessibilityLabel="Search icon"
+                            accessibilityLabel={i18n.t('add_screen.search_icon_label')}
                         />
                     )}
                 </View>
@@ -91,8 +96,12 @@ export default function AddBookScreen() {
                 {/* Results container */}
                 {isLoading ? (
                     <View style={styles.spinnerContainer}>
-                        <ActivityIndicator size="large" color={Colors.pink} accessibilityHint="Loading" />
-                        <Text style={styles.loadingText}>Loading books...</Text>
+                        <ActivityIndicator
+                            size="large"
+                            color={Colors.pink}
+                            accessibilityHint={i18n.t('add_screen.loading_text')}
+                        />
+                        <Text style={styles.loadingText}>{i18n.t('add_screen.loading_text')}</Text>
                     </View>
                 ) : (
                     <FlatList

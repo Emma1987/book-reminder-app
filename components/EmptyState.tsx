@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
+import i18n from '@/i18n/translations';
 
 type EmptyStateProps = {
     title: string;
@@ -19,7 +20,7 @@ export function EmptyState({ title, description, imageSource, buttonText, onButt
                 style={styles.image}
                 resizeMode="contain"
                 accessibilityRole="image"
-                accessibilityLabel="Empty state image"
+                accessibilityLabel={i18n.t('empty_state.illustration_label')}
             />
             <View style={styles.description}>
                 <ThemedText type="defaultSemiBold" textAlign="center">
@@ -35,7 +36,7 @@ export function EmptyState({ title, description, imageSource, buttonText, onButt
                         accessibilityRole="button"
                         accessibilityLabel={buttonText}
                     >
-                        <Text style={styles.buttonText}>{buttonText}</Text>
+                        <Text>{buttonText}</Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -64,8 +65,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: Colors.secondaryColor,
         borderRadius: 5,
-    },
-    buttonText: {
-        color: Colors.white,
     },
 });

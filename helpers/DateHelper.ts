@@ -1,9 +1,7 @@
 import { parse } from 'date-fns';
+import i18n from '@/i18n/translations';
 
-export const formatDateStr = (
-    dateString: string | null,
-    formatType: 'dayFirst' | 'monthFirst' = 'dayFirst',
-): string | null => {
+export const formatDateStr = (dateString: string | null, lang: string): string | null => {
     if (!dateString) return null;
 
     const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -11,16 +9,18 @@ export const formatDateStr = (
     const yearPattern = /^\d{4}$/;
 
     try {
+        const localeString = lang === 'en' ? 'en-GB' : lang;
+
         if (fullDatePattern.test(dateString)) {
             const date = new Date(dateString);
             const day = date.getDate();
-            const month = date.toLocaleString('en-US', { month: 'short' });
+            const month = date.toLocaleString(localeString, { month: 'short' });
             const year = date.getFullYear();
 
-            if (formatType === 'dayFirst') {
-                return `${day} ${month} ${year}`;
-            } else {
+            if (lang === 'en') {
                 return `${month} ${day}, ${year}`;
+            } else {
+                return `${day} ${month} ${year}`;
             }
         }
 
@@ -44,7 +44,9 @@ export const formatDateStr = (
     return null;
 };
 
-export const getDateObject = (dateString: string): Date | null => {
+export const getDateObject = (dateString: string | null): Date | null => {
+    if (!dateString) return null;
+
     const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
     const monthYearPattern = /^\d{4}-\d{2}$/;
     const yearPattern = /^\d{4}$/;
@@ -77,22 +79,22 @@ export const timeAgo = (date: Date) => {
 
     if (diffInMinutes < 60) {
         if (diffInMinutes < 1) {
-            return 'now';
+            return i18n.t('time_ago.now');
         }
 
-        return `${diffInMinutes} minute${diffInMinutes === 1 ? '' : 's'} ago`;
+        return i18n.t('time_ago.minutes_ago_count', { count: diffInMinutes });
     }
 
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) {
-        return `${diffInHours} hour${diffInHours === 1 ? '' : 's'} ago`;
+        return i18n.t('time_ago.hours_ago_count', { count: diffInHours });
     }
 
     const diffInDays = Math.floor(diffInHours / 24);
     if (diffInDays < 30) {
-        return `${diffInDays} day${diffInDays === 1 ? '' : 's'} ago`;
+        return i18n.t('time_ago.days_ago_count', { count: diffInDays });
     }
 
     const diffInMonths = Math.floor(diffInDays / 30);
-    return `${diffInMonths} month${diffInMonths === 1 ? '' : 's'} ago`;
+    return i18n.t('time_ago.months_ago_count', { count: diffInMonths });
 };
