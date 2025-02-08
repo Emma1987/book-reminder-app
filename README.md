@@ -1,50 +1,55 @@
-# Welcome to your Expo app 👋
+# NextRead, a book release tracker 📚
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+NextRead is a mobile application that helps users track upcoming book releases and receive notifications when their most anticipated books become available.
 
-## Get started
+## Features
 
-1. Install dependencies
+• Search for books by title and/or author  
+• Add books to your favorites list  
+• Receive notifications for upcoming book releases  
+• Supports English and French  
 
-   ```bash
-   npm install
-   ```
+[Homepage screenshot](/assets/screenshots/home.png)  
+[Book details screenshot](/assets/screenshots/book-details.png)  
+[Book notification screenshot](/assets/screenshots/book-notification.png)  
 
-2. Start the app
+## Tech Stack
 
-   ```bash
-    npx expo start
-   ```
+**Framework:** React Native (Expo)  
+**State Management:** Context API  
+**API Integration:** Google Books API  
+**Testing:** Jest & React Native Testing Library
 
-In the output, you'll find options to open the app in a
+## Installation & Setup
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+To run the project locally, follow these steps:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Clone the repository:  
+`git clone git@github.com:Emma1987/next-read-app.git`  
+`cd next-read-app`
 
-## Get a fresh project
+2. Install dependencies:  
+`npm install`
 
-When you're ready, run:
+3. Create a `.env.local` file and add your Google API key:  
+`GOOGLE_API_KEY=your_google_api_key_here`
 
-```bash
-npm run reset-project
-```
+4. Start the Expo development server:  
+`expo start`
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+5. Scan the QR code with the Expo Go app or run it on an emulator.
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+Contributions are welcome! If you’d like to contribute, please open an issue or submit a pull request.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## License
 
-## Join the community
+This project is licensed under the MIT License.
 
-Join our community of developers creating universal apps.
+## Contact
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+For any inquiries, feel free to reach out:  
+- [GitHub](https://github.com/Emma1987)  
+- [LinkedIn](https://www.linkedin.com/in/emmanuelle-mercadal/)
+

@@ -6,7 +6,7 @@ describe('Header', () => {
     it('renders the logo correctly', () => {
         const { getByLabelText } = render(<Header />);
 
-        const logo = getByLabelText('Readly Logo');
+        const logo = getByLabelText('Next Read logo');
         expect(logo).toBeTruthy();
     });
 

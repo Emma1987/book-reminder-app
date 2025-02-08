@@ -1,7 +1,19 @@
 import { parse } from 'date-fns';
 import i18n from '@/i18n/translations';
+import { ApplicationLanguageEnum } from '@/types/types';
 
-export const formatDateStr = (dateString: string | null, lang: string): string | null => {
+const getLocaleStringFromApplicationLanguage = (lang: ApplicationLanguageEnum): string => {
+    switch (lang) {
+        case ApplicationLanguageEnum.ENGLISH:
+            return 'en-GB';
+        case ApplicationLanguageEnum.FRENCH:
+            return 'fr-Fr';
+        default:
+            return 'fr-Fr';
+    }
+};
+
+export const formatDateStr = (dateString: string | null, lang: ApplicationLanguageEnum): string | null => {
     if (!dateString) return null;
 
     const fullDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -9,7 +21,7 @@ export const formatDateStr = (dateString: string | null, lang: string): string |
     const yearPattern = /^\d{4}$/;
 
     try {
-        const localeString = lang === 'en' ? 'en-GB' : lang;
+        const localeString = getLocaleStringFromApplicationLanguage(lang);
 
         if (fullDatePattern.test(dateString)) {
             const date = new Date(dateString);

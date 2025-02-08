@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "book-reminders-app",
-    "slug": "book-reminders-app",
+    "name": "Next Read",
+    "slug": "next-read-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

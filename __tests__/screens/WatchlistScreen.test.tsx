@@ -25,7 +25,7 @@ describe('WatchlistScreen', () => {
         );
 
         // Logo is rendered
-        expect(getByLabelText('Readly Logo')).toBeTruthy();
+        expect(getByLabelText('Next Read logo')).toBeTruthy();
 
         // Subtitle is rendered
         expect(getByText('Stay updated on the latest book releases!')).toBeTruthy();

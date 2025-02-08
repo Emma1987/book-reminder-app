@@ -12,17 +12,17 @@ exports[`Header matches the snapshot 1`] = `
     }
   >
     <Image
-      accessibilityLabel="Readly Logo"
+      accessibilityLabel="Next Read logo"
       accessibilityRole="image"
       source={
         {
-          "testUri": "../../../assets/images/readly.png",
+          "testUri": "../../../assets/images/next-read.png",
         }
       }
       style={
         {
           "height": 40,
-          "width": 90,
+          "width": 180,
         }
       }
     />

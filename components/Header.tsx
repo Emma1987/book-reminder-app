@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
+import i18n from '@/i18n/translations';
 
 type HeaderProps = {
     subHeaderText?: string | null;
@@ -15,10 +16,10 @@ export function Header({ subHeaderText = null, subHeaderIcon = null }: HeaderPro
         <>
             <View style={styles.headerContainer}>
                 <Image
-                    source={require('@/assets/images/readly.png')}
+                    source={require('@/assets/images/next-read.png')}
                     style={styles.logo}
                     accessibilityRole="image"
-                    accessibilityLabel="Readly Logo"
+                    accessibilityLabel={i18n.t('logo_label')}
                 />
             </View>
 
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         height: 40,
-        width: 90,
+        width: 180,
     },
     subHeaderContainer: {
         width: '100%',
